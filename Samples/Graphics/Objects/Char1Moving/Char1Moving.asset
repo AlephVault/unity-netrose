@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62fde038c240ca4b82fc755090c6753, type: 3}
+  m_Name: Char1Moving
+  m_EditorClassIdentifier: 
+  up: {fileID: 11400000, guid: c17f4fa9547cf7040bba3b57b1dad688, type: 2}
+  down: {fileID: 11400000, guid: 6110a1ef1536b7040bdb212c34711ba1, type: 2}
+  left: {fileID: 11400000, guid: cc6c552dbc910cd4c98a85ba0bfdb2cc, type: 2}
+  right: {fileID: 11400000, guid: bf220b334585091469f14d33a32c9010, type: 2}

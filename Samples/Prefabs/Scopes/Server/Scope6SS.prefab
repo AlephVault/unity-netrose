@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1541987363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958351889294608385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0988f903dc3c304bbd8cd44dbcf4d24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1541987364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958351889294608385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2bd54923048bf49b5b4a847584b256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: ScopeSS6
+--- !u!114 &7682478415927369454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958351889294608385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b21ee6e359f6e9e44a13048d64a10520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleports:
+  - TeleportName: T6_U
+    MapIdx: 0
+    X: 8
+    Y: 11
+    TeleportTarget: T3_D
+    ForcesDirection: 1
+    Direction: 0
+  - TeleportName: T6_L
+    MapIdx: 0
+    X: 0
+    Y: 6
+    TeleportTarget: T5_R
+    ForcesDirection: 1
+    Direction: 2
+  - TeleportName: T6_D
+    MapIdx: 0
+    X: 8
+    Y: 0
+    TeleportTarget: T9_U
+    ForcesDirection: 1
+    Direction: 3
+  teleportIndex: 0
+--- !u!1001 &2629211947845306351
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398892, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560365630319398894, guid: 5e67d8ec5ab126048b1297948e772ca2,
+        type: 3}
+      propertyPath: m_Name
+      value: Scope6SS
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e67d8ec5ab126048b1297948e772ca2, type: 3}
+--- !u!1 &5958351889294608385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8560365630319398894, guid: 5e67d8ec5ab126048b1297948e772ca2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2629211947845306351}
+  m_PrefabAsset: {fileID: 0}
