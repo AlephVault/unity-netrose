@@ -3,6 +3,8 @@ using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Client;
 using AlephVault.Unity.Meetgard.Types;
 using GameMeanMachine.Unity.NetRose.Samples.Common.Types;
 using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
+using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
+using GameMeanMachine.Unity.NetRose.Types.Models;
 
 
 namespace GameMeanMachine.Unity.NetRose
@@ -11,27 +13,14 @@ namespace GameMeanMachine.Unity.NetRose
     {
         namespace Client
         {
-            public class OwnableModelClientSide : NetRoseModelClientSide<Ownable, Ownable>
+            public class OwnableModelClientSide : OwnedNetRoseModelClientSide<Nothing, Nothing>
             {
-                public bool IsOwned { get; private set; }
-
-                protected override void InflateFrom(Ownable fullData)
+                protected override void InflateOwnedFrom(Nothing fullData)
                 {
-                    IsOwned = fullData.IsOwned;
-                    Update();
                 }
-
-                protected override void UpdateFrom(Ownable refreshData)
+                
+                protected override void UpdateOwnedFrom(Nothing refreshData)
                 {
-                    IsOwned = refreshData.IsOwned;
-                    Update();
-                }
-
-                private void Update()
-                {
-                    if (IsOwned && Camera.main) Camera.main.transform.position = new Vector3(
-                        transform.position.x, transform.position.y, -10
-                    );
                 }
             }
         }

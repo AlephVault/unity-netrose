@@ -1,14 +1,11 @@
 using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using UnityEngine;
 using AlephVault.Unity.Meetgard.Authoring.Behaviours.Server;
-using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
 using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
 using GameMeanMachine.Unity.WindRose.Types;
 using GameMeanMachine.Unity.NetRose.Samples.Common.Protocols;
+using Exception = System.Exception;
+
 
 namespace GameMeanMachine.Unity.NetRose
 {
@@ -18,96 +15,32 @@ namespace GameMeanMachine.Unity.NetRose
         {
             namespace Protocols
             {
-                [RequireComponent(typeof(NetRoseProtocolServerSide))]
+                [RequireComponent(typeof(SamplePrincipalProtocolServerSide))]
                 public class ClientMovementProtocolServerSide : ProtocolServerSide<ClientMovementProtocolDefinition>
                 {
-                    private class ObjectOwnage
-                    {
-                        public float LastCommandTime = 0;
-                        public INetRoseModelServerSide OwnedObject = null;
-                    }
-
-                    private Dictionary<ulong, ObjectOwnage> objects = new Dictionary<ulong, ObjectOwnage>();
-
-                    [SerializeField]
-                    private int char1index = 1;
-
-                    [SerializeField]
-                    private int char2index = 2;
-
-                    private NetRoseProtocolServerSide NetRoseProtocolServerSide;
+                    private SamplePrincipalProtocolServerSide SamplePrincipalProtocolServerSide;
 
                     protected override void Setup()
                     {
-                        NetRoseProtocolServerSide = GetComponent<NetRoseProtocolServerSide>();
+                        SamplePrincipalProtocolServerSide = GetComponent<SamplePrincipalProtocolServerSide>();
                     }
-
-                    public override async Task OnServerStarted()
-                    {
-                        objects = new Dictionary<ulong, ObjectOwnage>();
-                    }
-
-                    public override async Task OnServerStopped(System.Exception e)
-                    {
-                        objects = null;
-                    }
-
-                    public override async Task OnConnected(ulong clientId)
-                    {
-                        Debug.Log($"ClientMovementProtocolServerSide.OnConnected({clientId})::Queue");
-                        var _ = RunInMainThread(() =>
-                        {
-                            Debug.Log($"ClientMovementProtocolServerSide.OnConnected({clientId})::Start");
-                            // Which index to take the character from?
-                            int index = (clientId % 2 == 1) ? char1index : char2index;
-                            // Instantiate it.
-                            ObjectServerSide obj = NetRoseProtocolServerSide.InstantiateHere((uint)index, (obj) => {
-                                Debug.Log($"ClientMovementProtocolServerSide.OnConnected({clientId})::--Picking index: {index}");
-                                // Get the netrose component of it.
-                                OwnableModelServerSide ownableObj = obj.GetComponent<OwnableModelServerSide>();
-                                Debug.Log($"ClientMovementProtocolServerSide.OnConnected({clientId})::--Getting ownable obj", ownableObj);
-                                // Give it the required connection id.
-                                ownableObj.ConnectionId = clientId;
-                                // Add it to the dictionary.
-                                Debug.Log($"ClientMovementProtocolServerSide.OnConnected({clientId})::--Registering", ownableObj);
-                                objects[clientId] = new ObjectOwnage() { LastCommandTime = 0, OwnedObject = obj.GetComponent<INetRoseModelServerSide>() };
-                                // Initialize it in no map.
-                            });
-                            // Attach it to a map.
-                            Debug.Log($"ClientMovementProtocolServerSide.OnConnected({clientId})::--Attaching", obj);
-                            obj.GetComponent<INetRoseModelServerSide>().MapObject.Attach(
-                                NetRoseProtocolServerSide.ScopesProtocolServerSide.LoadedScopes[4].GetComponent<Scope>()[0],
-                                8, 6, true
-                            );
-                            Debug.Log($"ClientMovementProtocolServerSide.OnConnected({clientId})::End");
-                        });
-                    }
-
-                    public override async Task OnDisconnected(ulong clientId, System.Exception reason)
-                    {
-                        var _ = RunInMainThread(() =>
-                        {
-                            Debug.Log($"ClientMovementProtocolServerSide.OnDisconnected({clientId})::Start");
-                            if (objects.TryGetValue(clientId, out ObjectOwnage ownage))
-                            {
-                                // It will de-spawn and destroy the object.
-                                Destroy(ownage.OwnedObject.MapObject.gameObject);
-                                // Then, unregistering it.
-                                objects.Remove(clientId);
-                            }
-                            Debug.Log($"ClientMovementProtocolServerSide.OnDisconnected({clientId})::End");
-                        });
-                    }
-
+                    
                     private void DoThrottled(ulong connectionId, Action<MapObject> callback)
                     {
-                        ObjectOwnage ownage = objects[connectionId];
-                        MapObject obj = ownage.OwnedObject.MapObject;
-                        float time = Time.time;
-                        if (ownage.LastCommandTime + 0.75 / obj.Speed <= time)
+                        try
                         {
-                            ownage.LastCommandTime = time;
-                            callback(obj);
+                            OwnableModelServerSide ownage = SamplePrincipalProtocolServerSide.GetPrincipal(connectionId);
+                            MapObject obj = ownage.MapObject;
+                            float time = Time.time;
+                            if (ownage.LastCommandTime + 0.75 / obj.Speed <= time)
+                            {
+                                ownage.LastCommandTime = time;
+                                callback(obj);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogException(e);
                         }
                     }
 

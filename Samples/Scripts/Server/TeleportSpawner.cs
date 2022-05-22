@@ -64,7 +64,7 @@ namespace GameMeanMachine.Unity.NetRose
                         {
                             ObjectServerSide obj = ScopeServerSide.Protocol.InstantiateHere(teleportIndex);
                             DoorLinker doorLinker = obj.GetComponent<DoorLinker>();
-                            TeleportTarget teleportTarget = obj.GetComponent<TeleportTarget>();
+                            SimpleTeleportTarget teleportTarget = obj.GetComponent<SimpleTeleportTarget>();
                             doorLinker.DoorName = teleport.TeleportName;
                             doorLinker.TargetName = teleport.TeleportTarget;
                             linkers.Add(doorLinker);

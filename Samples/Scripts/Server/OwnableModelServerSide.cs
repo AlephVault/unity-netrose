@@ -1,11 +1,6 @@
-using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Server;
 using AlephVault.Unity.Meetgard.Types;
 using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.NetRose.Samples.Common.Types;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
+using GameMeanMachine.Unity.NetRose.Types.Models;
 
 
 namespace GameMeanMachine.Unity.NetRose
@@ -14,51 +9,21 @@ namespace GameMeanMachine.Unity.NetRose
     {
         namespace Server
         {
-            public class OwnableModelServerSide : NetRoseModelServerSide<Ownable, Ownable>
+            public class OwnableModelServerSide : OwnedNetRoseModelServerSide<Nothing, Nothing>
             {
-                public ulong ConnectionId;
+                public float LastCommandTime = 0;
 
-                private static Ownable Owned = new Ownable() { IsOwned = true };
-                private static Ownable NotOwned = new Ownable() { IsOwned = false };
+                private static OwnedModel<Nothing> Owned = new OwnedModel<Nothing>() { Owned = true, Data = Nothing.Instance};
+                private static OwnedModel<Nothing> NotOwned = new OwnedModel<Nothing>() { Owned = false, Data = Nothing.Instance};
 
-                protected void Awake()
+                protected override OwnedModel<Nothing> GetInnerFullData(ulong connectionId)
                 {
-                    base.Awake();
-                    OnAfterSpawned += OwnableModelServerSide_OnSpawned;
-                    OnBeforeDespawned += OwnableModelServerSide_OnDespawned;
+                    return GetOwner() == connectionId ? Owned : NotOwned;
                 }
 
-                protected void Start()
+                protected override Nothing GetInnerRefreshData(ulong connectionId, string context)
                 {
-                    base.Start();
-                }
-
-                protected void OnDestroy()
-                {
-                    base.OnDestroy();
-                    OnSpawned -= OwnableModelServerSide_OnSpawned;
-                    OnDespawned -= OwnableModelServerSide_OnDespawned;
-                }
-
-                private async Task OwnableModelServerSide_OnSpawned()
-                {
-                    Debug.Log($"Spawned for Connection Id: {ConnectionId} at scope: {Scope.Id}");
-                    var _ = Protocol.SendTo(ConnectionId, Scope.Id);
-                }
-
-                private async Task OwnableModelServerSide_OnDespawned()
-                {
-                    var _ = Protocol.SendToLimbo(ConnectionId);
-                }
-
-                protected override Ownable GetInnerFullData(ulong connectionId)
-                {
-                    return (connectionId == ConnectionId) ? Owned : NotOwned;
-                }
-
-                protected override Ownable GetInnerRefreshData(ulong connectionId, string context)
-                {
-                    return (connectionId == ConnectionId) ? Owned : NotOwned;
+                    return Nothing.Instance;
                 }
             }
         }

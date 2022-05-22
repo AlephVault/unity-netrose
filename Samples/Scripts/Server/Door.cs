@@ -16,10 +16,10 @@ namespace GameMeanMachine.Unity.NetRose
             ///   This is just a door (a teleporter + teleport target, with
             ///   a forced movement on arrival).
             /// </summary>
-            [RequireComponent(typeof(TeleportTarget))]
-            public class Door : LocalTeleporter
+            [RequireComponent(typeof(SimpleTeleportTarget))]
+            public class Door : SimpleTeleporter
             {
-                protected override void DoTeleport(Action teleport, MapObject objectToBeTeleported, TeleportTarget teleportTarget, MapObject teleportTargetObject)
+                protected override void DoTeleport(Action teleport, MapObject objectToBeTeleported, SimpleTeleportTarget teleportTarget, MapObject teleportTargetObject)
                 {
                     base.DoTeleport(teleport, objectToBeTeleported, teleportTarget, teleportTargetObject);
                     if (teleportTarget.ForceOrientation)

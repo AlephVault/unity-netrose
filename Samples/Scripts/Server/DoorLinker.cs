@@ -28,12 +28,12 @@ namespace GameMeanMachine.Unity.NetRose
                 public string TargetName = "";
 
                 private EmptyModelServerSide emptyModelServerSide;
-                private LocalTeleporter localTeleporter;
+                private SimpleTeleporter _simpleTeleporter;
 
                 private void Awake()
                 {
                     emptyModelServerSide = GetComponent<EmptyModelServerSide>();
-                    localTeleporter = GetComponent<LocalTeleporter>();
+                    _simpleTeleporter = GetComponent<SimpleTeleporter>();
                     emptyModelServerSide.OnSpawned += EmptyModelServerSide_OnSpawned;
                 }
 
@@ -41,7 +41,7 @@ namespace GameMeanMachine.Unity.NetRose
                 {
                     try
                     {
-                        localTeleporter.Target = doorLinkersByName[TargetName].GetComponent<TeleportTarget>();
+                        _simpleTeleporter.Target = doorLinkersByName[TargetName].GetComponent<SimpleTeleportTarget>();
                     }
                     catch (KeyNotFoundException)
                     {
