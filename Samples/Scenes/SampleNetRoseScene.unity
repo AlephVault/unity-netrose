@@ -222,7 +222,7 @@ MonoBehaviour:
   maxMessageSize: 1024
   writeTimeout: 15
   DontDestroy: 0
-  secure: 1
+  secure: 0
   trustServerCertificate: 0
   sslProtocols: 240
   checkCertificateRevocation: 1
@@ -482,7 +482,7 @@ MonoBehaviour:
   maxMessageSize: 1024
   writeTimeout: 15
   DontDestroy: 0
-  secure: 1
+  secure: 0
   sslProtocols: 240
   certificatePath: /home/luismasuelli/Desktop/test.alephvault.com.txt
   privateKeyPassphraseEnvVar: prueba
