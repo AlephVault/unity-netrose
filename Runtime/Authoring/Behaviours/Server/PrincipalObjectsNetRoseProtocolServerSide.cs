@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Server;
 using GameMeanMachine.Unity.NetRose.Types.Models;
+using GameMeanMachine.Unity.NetRose.Types.Protocols.Messages;
+using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
 using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
+using GameMeanMachine.Unity.WindRose.Types;
 using UnityEngine;
+using Exception = System.Exception;
 
 
 namespace GameMeanMachine.Unity.NetRose
@@ -26,8 +30,8 @@ namespace GameMeanMachine.Unity.NetRose
                 public class PrincipalObjectsNetRoseProtocolServerSide<T> : NetRoseProtocolServerSide
                     where T : ObjectServerSide, IServerOwned, INetRoseModelServerSide
                 {
-                    private const string UseDefaultKey = "";
-                    private const int UseDefaultIndex = -1;
+                    protected const string UseDefaultKey = "";
+                    protected const int UseDefaultIndex = -1;
                     
                     // All the principal objects are meant to be tracked here..
                     private Dictionary<ulong, T> objects = new Dictionary<ulong, T>();
@@ -49,7 +53,7 @@ namespace GameMeanMachine.Unity.NetRose
                     /// </summary>
                     [SerializeField]
                     private string defaultPrefabKey = "";
-
+                    
                     /// <summary>
                     ///   Initializes the principal objects dictionary.
                     /// </summary>
@@ -301,6 +305,75 @@ namespace GameMeanMachine.Unity.NetRose
                                 $"have an object instantiated as its principal"
                             );
                         }
+                    }
+
+                    // Attempts moving an object. If it is already moving, returns
+                    // false. If it is NOT moving, attempts the movement. If the
+                    // movement is not successful and this is an optimistic call
+                    // (i.e. for games using optimistic objects in the client side)
+                    // then a MovementRejected message will be sent to the client.
+                    // Anyway, the result is true in either case.
+                    private void Move(ulong connectionId, Direction direction, bool queue)
+                    {
+                        T principal = GetPrincipal(connectionId);
+                        MapObject obj = principal.MapObject;
+                        obj.StartMovement(direction, obj.IsMoving, queue);
+                    }
+
+                    /// <summary>
+                    ///   Attempts moving the owned object to the left.
+                    /// </summary>
+                    /// <param name="connectionId">The connection id to move the object for</param>
+                    /// <returns>Whether the object was moving or not</returns>
+                    /// <remarks>
+                    ///   This function MUST be called in the main thread
+                    ///   (e.g. in a callback provided to RunInMainThread).
+                    /// </remarks>
+                    public void MoveLeft(ulong connectionId, bool queue = true)
+                    {
+                        Move(connectionId, Direction.LEFT, queue);
+                    }
+                    
+                    /// <summary>
+                    ///   Attempts moving the owned object to the left.
+                    /// </summary>
+                    /// <param name="connectionId">The connection id to move the object for</param>
+                    /// <returns>Whether the object was moving or not</returns>
+                    /// <remarks>
+                    ///   This function MUST be called in the main thread
+                    ///   (e.g. in a callback provided to RunInMainThread).
+                    /// </remarks>
+                    public void MoveRight(ulong connectionId, bool queue = true)
+                    {
+                        Move(connectionId, Direction.RIGHT, queue);
+                    }
+
+                    /// <summary>
+                    ///   Attempts moving the owned object up.
+                    /// </summary>
+                    /// <param name="connectionId">The connection id to move the object for</param>
+                    /// <returns>Whether the object was moving or not</returns>
+                    /// <remarks>
+                    ///   This function MUST be called in the main thread
+                    ///   (e.g. in a callback provided to RunInMainThread).
+                    /// </remarks>
+                    public void MoveUp(ulong connectionId, bool queue = true)
+                    {
+                        Move(connectionId, Direction.UP, queue);
+                    }
+
+                    /// <summary>
+                    ///   Attempts moving the main object down.
+                    /// </summary>
+                    /// <param name="connectionId">The connection id to move the object for</param>
+                    /// <returns>Whether the object was moving or not</returns>
+                    /// <remarks>
+                    ///   This function MUST be called in the main thread
+                    ///   (e.g. in a callback provided to RunInMainThread).
+                    /// </remarks>
+                    public void MoveDown(ulong connectionId, bool queue = true)
+                    {
+                        Move(connectionId, Direction.DOWN, queue);
                     }
                 }
             }

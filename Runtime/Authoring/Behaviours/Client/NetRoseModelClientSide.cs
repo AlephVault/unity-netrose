@@ -41,7 +41,7 @@ namespace GameMeanMachine.Unity.NetRose
                     // Tells whether it is spawned or not.
                     private bool spawned = false;
 
-                    private void Awake()
+                    protected void Awake()
                     {
                         OnSpawned += NetRoseModelClientSide_OnSpawned;
                         OnDespawned += NetRoseModelClientSide_OnDespawned;
@@ -50,7 +50,7 @@ namespace GameMeanMachine.Unity.NetRose
                         MapObject.onMovementCancelled.AddListener(OnMovementCancelled);
                     }
 
-                    private void OnDestroy()
+                    protected void OnDestroy()
                     {
                         OnSpawned -= NetRoseModelClientSide_OnSpawned;
                         OnDespawned -= NetRoseModelClientSide_OnDespawned;
@@ -88,84 +88,159 @@ namespace GameMeanMachine.Unity.NetRose
                     // From this point, all the network-related events start.
                     //
 
-                    // Processes an attached event. This is immediate:
-                    // Clears the queue (if it is executing, it stops),
-                    // cancels the current movement (if any) and does
-                    // the attachment.
+                    /// <summary>
+                    ///   Clears the command queue to perform an immediate
+                    ///   action that comes next.
+                    /// </summary>
+                    protected void Immediate()
+                    {
+                        queue.Clear();
+                    }
+
+                    // Processes an attached event.
                     void INetRoseModelClientSide.OnAttached(Map map, ushort x, ushort y)
                     {
                         if (!spawned) return;
-                        queue.Clear();
+                        OnAttached(map, x, y);
+                    }
+
+                    /// <summary>
+                    ///   The true implementation of an attach message
+                    ///   is to clear everything and do it immediately.
+                    /// </summary>
+                    /// <param name="map">The new map</param>
+                    /// <param name="x">The target x position</param>
+                    /// <param name="y">The target y position</param>
+                    protected virtual void OnAttached(Map map, ushort x, ushort y)
+                    {
                         MapObject.Attach(map, x, y, true);
                     }
 
-                    // Processes a detached event. This is immediate:
-                    // Clears the queue (if it is executing, it stops),
-                    // cancels the current movement (if any) and does
-                    // the detachment.
+                    // Processes a detached event.
                     void INetRoseModelClientSide.OnDetached()
                     {
                         if (!spawned) return;
-                        queue.Clear();
+                        OnDetached();
+                    }
+
+                    /// <summary>
+                    ///   The true implementation of a detach message
+                    ///   is to clear everything and do it immediately.
+                    /// </summary>
+                    /// <param name="x">The target x position</param>
+                    /// <param name="y">The target y position</param>
+                    protected virtual void OnDetached()
+                    {
+                        Immediate();
                         MapObject.Detach();
                     }
 
-                    // Processes a teleport event. This is immediate:
-                    // Clears the queue (if it is executing, it stops),
-                    // cancels the current movement (if any) and does
-                    // the teleport.
+                    // Processes a teleport event.
                     void INetRoseModelClientSide.OnTeleported(ushort x, ushort y)
                     {
                         if (!spawned) return;
-                        queue.Clear();
+                        OnTeleported(x, y);
+                    }
+
+                    /// <summary>
+                    ///   The true implementation of a teleport message
+                    ///   is to clear everything and do it immediately.
+                    /// </summary>
+                    /// <param name="x">The target x position</param>
+                    /// <param name="y">The target y position</param>
+                    protected virtual void OnTeleported(ushort x, ushort y)
+                    {
+                        Immediate();
                         MapObject.Teleport(x, y);
                     }
 
-                    // Processes a movement start event. It queues the
-                    // MovementStart command and, if the queue is not
-                    // currently executing, it is now executed.
+                    // Processes a movement start event.
                     void INetRoseModelClientSide.OnMovementStarted(ushort x, ushort y, Direction direction)
                     {
                         if (!spawned) return;
+                        OnMovementStarted(x, y, direction);
+                    }
+
+                    /// <summary>
+                    ///   The true implementation of a movement started
+                    ///   message is to queue a start movement command.
+                    /// </summary>
+                    /// <param name="x">The x position on movement start</param>
+                    /// <param name="y">The y position on movement start</param>
+                    /// <param name="direction">The movement direction</param>
+                    protected virtual void OnMovementStarted(ushort x, ushort y, Direction direction)
+                    {
                         QueueElement(new MovementStartCommand() { StartX = x, StartY = y, Direction = direction });
                     }
 
-                    // Processes a movement cancel event. It queues the
-                    // MovementCancel command and, if the queue is not
-                    // currently executing, it is now executed.
+                    // Processes a movement cancel event.
                     void INetRoseModelClientSide.OnMovementCancelled(ushort x, ushort y)
                     {
                         if (!spawned) return;
+                        OnMovementCancelled(x, y);
+                    }
+
+                    /// <summary>
+                    ///   The true implementation of a cancel movement
+                    ///   message is to queue the cancel movement command.
+                    /// </summary>
+                    /// <param name="x">The x position to revert to</param>
+                    /// <param name="y">The y position to revert to</param>
+                    protected virtual void OnMovementCancelled(ushort x, ushort y)
+                    {
                         QueueElement(new MovementCancelCommand() { RevertX = x, RevertY = y });
                     }
 
-                    // Processes a movement finish event. It queues the
-                    // MovementFinish command and, if the queue is not
-                    // currently executing, it is now executed.
+                    // Processes a movement rejection event.
+                    void INetRoseModelClientSide.OnMovementRejected(ushort x, ushort y)
+                    {
+                        if (!spawned) return;
+                        OnMovementRejected(x, y);
+                    }
+
+                    /// <summary>
+                    ///   The true implementation of a reject movement
+                    ///   event is empty. It will be used later.
+                    /// </summary>
+                    /// <param name="x">The x position to revert to</param>
+                    /// <param name="y">The y position to revert to</param>
+                    protected virtual void OnMovementRejected(ushort x, ushort y)
+                    {
+                    }
+
+                    // Processes a movement finish event.
                     void INetRoseModelClientSide.OnMovementFinished(ushort x, ushort y)
                     {
                         if (!spawned) return;
+                        OnMovementFinished(x, y);
+                    }
+
+                    /// <summary>
+                    ///   The true implementation of a finish movement message
+                    ///   is to queue the finish movement command.
+                    /// </summary>
+                    /// <param name="x">The final x position</param>
+                    /// <param name="y">The final y position</param>
+                    protected virtual void OnMovementFinished(ushort x, ushort y)
+                    {
                         QueueElement(new MovementFinishCommand() { EndX = x, EndY = y });
                     }
 
-                    // Processes a movement speed change event. It queues
-                    // the SpeedChanged command and, if the queue is not
-                    // currently executing, it is now executed.
+                    // Processes a movement speed change event.
                     void INetRoseModelClientSide.OnSpeedChanged(uint speed)
                     {
                         if (!spawned) return;
                         QueueElement(new SpeedChangeCommand() { Speed = speed });
                     }
 
-                    // Processes an orientation change event. It queues the
-                    // OrientationChanged command and, if the queue is not
-                    // currently executing, it is now executed.
+                    // Processes an orientation change event.
                     void INetRoseModelClientSide.OnOrientationChanged(Direction orientation)
                     {
                         if (!spawned) return;
                         QueueElement(new OrientationChangeCommand() { Orientation = orientation });
                     }
 
+                    // Performs the base inflation (i.e. refreshing base MapObject data).
                     private void InflateBase(Status status, Direction orientation, uint speed, bool clearQueue)
                     {
                         MapObject.Orientation = orientation;
@@ -189,8 +264,11 @@ namespace GameMeanMachine.Unity.NetRose
                         }
                     }
 
-                    // Updates the object with the full spawn data (attachment,
-                    // movement and model).
+                    /// <summary>
+                    ///   Updates the object with the full spawn data (attachment,
+                    ///   movement and model).
+                    /// </summary>
+                    /// <param name="fullData">The wrapped full model data to inflate from</param>
                     protected override void InflateFrom(MapObjectModel<SpawnData> fullData)
                     {
                         // Also initializing the object here, to avoid executing
@@ -212,12 +290,17 @@ namespace GameMeanMachine.Unity.NetRose
                     }
 
                     /// <summary>
-                    ///   Updates the object with the full model data, after processing
+                    ///   Inflates the object with the full model data, after processing
                     ///   wrapping attachment and movement.
                     /// </summary>
-                    /// <param name="fullData">The full model data to update from</param>
+                    /// <param name="fullData">The full model data to inflate from</param>
                     protected abstract void InflateFrom(SpawnData fullData);
 
+                    /// <summary>
+                    ///   Updates the object with the full model data, which also involves
+                    ///   base-inflating part of the data.
+                    /// </summary>
+                    /// <param name="refreshData">The wrapped refresh model data to update from</param>
                     protected override void UpdateFrom(MapObjectModel<RefreshData> refreshData)
                     {
                         XDebug debugger = new XDebug("NetRose", this, $"UpdateFrom({refreshData})", debug);

@@ -65,25 +65,47 @@ namespace GameMeanMachine.Unity.NetRose
                     /// <param name="direction">The movement direction</param>
                     internal void OnMovementStarted(ushort x, ushort y, Direction direction);
 
-                    // Processes a movement cancel event. It queues the
-                    // MovementCancel command and, if the queue is not
-                    // currently executing, it is now executed.
+                    /// <summary>
+                    ///   Processes a movement rejected event. This works
+                    ///   quite similar to a cancelled event, but works
+                    ///   for owned + optimistic objects.
+                    /// </summary>
+                    /// <param name="x">The revert x position</param>
+                    /// <param name="y">The revert y position</param>
+                    internal void OnMovementRejected(ushort x, ushort y);
 
+                    /// <summary>
+                    ///   Processes a movement cancel event. It queues the
+                    ///   MovementCancel command and, if the queue is not
+                    ///   currently executing, it is now executed.
+                    /// </summary>
+                    /// <param name="x">The revert x position</param>
+                    /// <param name="y">The revert y position</param>
                     internal void OnMovementCancelled(ushort x, ushort y);
 
-                    // Processes a movement finish event. It queues the
-                    // MovementFinish command and, if the queue is not
-                    // currently executing, it is now executed.
+                    /// <summary>
+                    ///   Processes a movement finish event. It queues the
+                    ///   MovementFinish command and, if the queue is not
+                    ///   currently executing, it is now executed.
+                    /// </summary>
+                    /// <param name="x">The finish x position</param>
+                    /// <param name="y">The finish y position</param>
                     internal void OnMovementFinished(ushort x, ushort y);
 
-                    // Processes a movement speed change event. It queues
-                    // the SpeedChanged command and, if the queue is not
-                    // currently executing, it is now executed.
+                    /// <summary>
+                    ///   Processes a movement speed change event. It queues
+                    ///   the SpeedChanged command and, if the queue is not
+                    ///   currently executing, it is now executed.
+                    /// </summary>
+                    /// <param name="speed">The new speed</param>
                     internal void OnSpeedChanged(uint speed);
 
-                    // Processes an orientation change event. It queues the
-                    // OrientationChanged command and, if the queue is not
-                    // currently executing, it is now executed.
+                    /// <summary>
+                    ///   Processes an orientation change event. It queues the
+                    ///   OrientationChanged command and, if the queue is not
+                    ///   currently executing, it is now executed.
+                    /// </summary>
+                    /// <param name="orientation">The new orientation</param>
                     internal void OnOrientationChanged(Direction orientation);
                 }
             }

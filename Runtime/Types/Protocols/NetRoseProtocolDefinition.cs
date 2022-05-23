@@ -25,6 +25,7 @@ namespace GameMeanMachine.Unity.NetRose
                     DefineServerMessage<ObjectMessage<Nothing>>("Object:Detached");
                     DefineServerMessage<ObjectMessage<MovementStart>>("Object:Movement:Started");
                     DefineServerMessage<ObjectMessage<Position>>("Object:Movement:Cancelled");
+                    DefineServerMessage<ObjectMessage<Position>>("Object:Movement:Rejected");
                     DefineServerMessage<ObjectMessage<Position>>("Object:Movement:Finished");
                     DefineServerMessage<ObjectMessage<Position>>("Object:Teleported");
                     DefineServerMessage<ObjectMessage<UInt>>("Object:Speed:Changed");

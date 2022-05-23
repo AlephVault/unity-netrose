@@ -15,7 +15,7 @@ namespace GameMeanMachine.Unity.NetRose
                 ///   Sets the owner (connection id) of the object.
                 ///   0 means "no owner".
                 /// </summary>
-                public void SetOwner(ulong connectionId);
+                internal void SetOwner(ulong connectionId);
                 
                 /// <summary>
                 ///   Gets the owner (connection id) of the object.

@@ -186,6 +186,19 @@ namespace GameMeanMachine.Unity.NetRose
                     {
                         await NetRoseProtocolServerSide.BroadcastObjectOrientationChanged(Connections(), ScopeServerSide.Id, objectId, orientation);
                     }
+                    
+                    /// <summary>
+                    ///   Sends a "object movement rejected" message. This message is triggered when
+                    ///   an object is rejected from moving inside a map in certain scope.
+                    /// </summary>
+                    /// <param name="connectionId">The connection id to send this message to</param>
+                    /// <param name="objectId">The id of the object</param>
+                    /// <param name="x">The to-revert x position of the object when cancelling movement</param>
+                    /// <param name="y">The to-revert y position of the object when cancelling movement</param>
+                    internal async Task SendObjectMovementRejected(ulong connectionId, uint objectId, ushort x, ushort y)
+                    {
+                        await NetRoseProtocolServerSide.SendObjectMovementRejected(connectionId, ScopeServerSide.Id, objectId, x, y);
+                    }
                 }
             }
         }

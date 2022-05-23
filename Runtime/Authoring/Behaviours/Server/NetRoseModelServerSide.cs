@@ -84,7 +84,7 @@ namespace GameMeanMachine.Unity.NetRose
                         NetRoseScopeServerSide = null;
                     }
 
-                    private void RunInMainThreadIfSpawned(Action callback)
+                    protected void RunInMainThreadIfSpawned(Action callback)
                     {
                         Protocol.RunInMainThread(() =>
                         {
@@ -132,7 +132,7 @@ namespace GameMeanMachine.Unity.NetRose
                             );
                         });
                     }
-
+                    
                     private void OnMovementFinished(Direction direction)
                     {
                         Status newStatus = GetCurrentStatus();
@@ -187,9 +187,9 @@ namespace GameMeanMachine.Unity.NetRose
                         });
                     }
 
-                    private Status currentStatus = null;
+                    protected Status currentStatus = null;
 
-                    private Status GetCurrentStatus()
+                    protected Status GetCurrentStatus()
                     {
                         if (MapObject.ParentMap != null)
                         {

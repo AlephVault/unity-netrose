@@ -15,13 +15,13 @@ namespace GameMeanMachine.Unity.NetRose
         {
             namespace Client
             {
-                public abstract partial class NetRoseModelClientSide<SpawnData, RefreshData> : ModelClientSide<MapObjectModel<SpawnData>, MapObjectModel<RefreshData>>, INetRoseModelClientSide
+                public abstract partial class NetRoseModelClientSide<SpawnData, RefreshData>
                     where SpawnData : class, ISerializable, new()
                     where RefreshData : class, ISerializable, new()
                 {
                     /// <summary>
-                    //    One of the queued commands: Movement Start, Finish, Cancel,
-                    //    Speed Change, and Orientation Change.
+                    ///   One of the queued commands: Movement Start, Finish, Cancel,
+                    ///   Speed Change, and Orientation Change.
                     /// </summary>
                     private interface QueuedCommand
                     {

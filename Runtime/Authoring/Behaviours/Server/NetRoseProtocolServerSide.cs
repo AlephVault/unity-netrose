@@ -47,7 +47,9 @@ namespace GameMeanMachine.Unity.NetRose
                     private Func<IEnumerable<ulong>, ObjectMessage<Position>, Dictionary<ulong, Task>> ObjectTeleportedBroadcaster;
                     private Func<IEnumerable<ulong>, ObjectMessage<UInt>, Dictionary<ulong, Task>> ObjectSpeedChangedBroadcaster;
                     private Func<IEnumerable<ulong>, ObjectMessage<Enum<Direction>>, Dictionary<ulong, Task>> ObjectOrientationChangedBroadcaster;
-
+                    private Func<ulong, ObjectMessage<Position>, Task> ObjectMovementRejectedSender;
+                    
+                    
                     /// <summary>
                     ///   An after-awake setup.
                     /// </summary>
@@ -66,6 +68,7 @@ namespace GameMeanMachine.Unity.NetRose
                         ObjectTeleportedBroadcaster = MakeBroadcaster<ObjectMessage<Position>>("Object:Teleported");
                         ObjectSpeedChangedBroadcaster = MakeBroadcaster<ObjectMessage<UInt>>("Object:Speed:Changed");
                         ObjectOrientationChangedBroadcaster = MakeBroadcaster<ObjectMessage<Enum<Direction>>>("Object:Orientation:Changed");
+                        ObjectMovementRejectedSender = MakeSender<ObjectMessage<Position>>("Object:Movement:Rejected");
                     }
 
                     // From now, a lot of internal functions are to be dispatched.
@@ -145,7 +148,7 @@ namespace GameMeanMachine.Unity.NetRose
                             Content = new Position() { X = x, Y = y }
                         }));
                     }
-
+                    
                     /// <summary>
                     ///   Broadcasts a "object movement finished" message. This message is triggered when
                     ///   an object finished moving inside a map in certain scope.
@@ -218,6 +221,30 @@ namespace GameMeanMachine.Unity.NetRose
                             ObjectId = objectId,
                             Content = (Enum<Direction>)orientation
                         }));
+                    }
+
+                    /// <summary>
+                    ///   Sends, to a single person, when the object movement is rejected.
+                    /// </summary>
+                    /// <param name="connectionId">The id of the connection to send this message to</param>
+                    /// <param name="scopeId">The id of the scope the object belongs to</param>
+                    /// <param name="objectId">The id of the object</param>
+                    /// <param name="x">The to-revert x position of the object when cancelling movement</param>
+                    /// <param name="y">The to-revert y position of the object when cancelling movement</param>
+                    /// <param name="direction">The direction of the movement</param>
+                    /// <returns></returns>
+                    internal Task SendObjectMovementRejected(ulong connectionId, uint scopeId, uint objectId, ushort x, ushort y)
+                    {
+                        return ObjectMovementRejectedSender(connectionId, new ObjectMessage<Position>()
+                        {
+                            ScopeId = scopeId,
+                            ObjectId = objectId,
+                            Content = new Position()
+                            {
+                                X = x,
+                                Y = y
+                            }
+                        });
                     }
 
                     /// <summary>

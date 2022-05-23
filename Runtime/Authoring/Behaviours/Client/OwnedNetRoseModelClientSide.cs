@@ -1,5 +1,6 @@
 ﻿using AlephVault.Unity.Binary;
 using GameMeanMachine.Unity.NetRose.Types.Models;
+using GameMeanMachine.Unity.WindRose.Types;
 using UnityEngine;
 
 
@@ -70,6 +71,51 @@ namespace GameMeanMachine.Unity.NetRose
                     public bool IsOwned()
                     {
                         return isOwned;
+                    }
+
+                    /// <summary>
+                    ///   Returns whether the object is optimistic or not. This should
+                    ///   be constant per class (or, at least, per prefab), instead of
+                    ///   dynamic (per instance).
+                    /// </summary>
+                    public virtual bool IsOptimistic()
+                    {
+                        return false;
+                    }
+
+                    /// <summary>
+                    ///   Starts the movement locally, except if this object is
+                    ///   optimistic or not owned by the current connection.
+                    /// </summary>
+                    /// <param name="x">The x position on movement start</param>
+                    /// <param name="y">The y position on movement start</param>
+                    /// <param name="direction">The movement direction</param>
+                    protected override void OnMovementStarted(ushort x, ushort y, Direction direction)
+                    {
+                        if (IsOptimistic() && IsOwned()) return;
+                        base.OnMovementStarted(x, y, direction);
+                    }
+
+                    /// <summary>
+                    ///   Finished the movement locally, except if this object
+                    ///   is optimistic or not owned by the current connection.
+                    /// </summary>
+                    /// <param name="x">The final x position</param>
+                    /// <param name="y">The final y position</param>
+                    protected override void OnMovementFinished(ushort x, ushort y)
+                    {
+                        if (IsOptimistic() && IsOwned()) return;
+                        base.OnMovementFinished(x, y);
+                    }
+
+                    /// <summary>
+                    ///   Reverts the rejected movement.
+                    /// </summary>
+                    /// <param name="x">The revert x position</param>
+                    /// <param name="y">The revert y position</param>
+                    protected override void OnMovementRejected(ushort x, ushort y)
+                    {
+                        if (IsOptimistic() && IsOwned()) MapObject.Teleport(x, y, true);
                     }
                 }
             }

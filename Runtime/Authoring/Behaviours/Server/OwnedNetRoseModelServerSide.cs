@@ -1,6 +1,7 @@
 ﻿using AlephVault.Unity.Binary;
 using GameMeanMachine.Unity.NetRose.Types.Models;
 using System.Threading.Tasks;
+using GameMeanMachine.Unity.WindRose.Types;
 
 
 namespace GameMeanMachine.Unity.NetRose
@@ -31,12 +32,38 @@ namespace GameMeanMachine.Unity.NetRose
                         OnAfterSpawned += OwnedNetRoseModelServerSide_OnSpawned;
                         OnBeforeDespawned += OwnedNetRoseModelServerSide_OnDespawned;
                     }
+
+                    protected void Start()
+                    {
+                        base.Start();
+                        MapObject.onMovementRejected.AddListener(OnMovementRejected);
+                    }
                     
                     protected void OnDestroy()
                     {
                         base.OnDestroy();
                         OnSpawned -= OwnedNetRoseModelServerSide_OnSpawned;
                         OnDespawned -= OwnedNetRoseModelServerSide_OnDespawned;
+                        MapObject.onMovementRejected.RemoveListener(OnMovementRejected);
+                    }
+
+                    private void OnMovementRejected(Direction direction)
+                    {
+                        // If I recall correctly, I don't need the status 
+                        // update, but I do it nevertheless.
+                        Status newStatus = GetCurrentStatus();
+                        ushort x = MapObject.X;
+                        ushort y = MapObject.Y;
+                        RunInMainThreadIfSpawned(() =>
+                        {
+                            currentStatus = newStatus;
+                            if (Owner != 0)
+                            {
+                                _ = NetRoseScopeServerSide.SendObjectMovementRejected(
+                                    Owner, Id, x, y
+                                );
+                            }
+                        });
                     }
 
                     private async Task OwnedNetRoseModelServerSide_OnSpawned()
@@ -49,7 +76,7 @@ namespace GameMeanMachine.Unity.NetRose
                         var _ = Protocol.SendToLimbo(Owner);
                     }
 
-                    public void SetOwner(ulong connectionId)
+                    void IServerOwned.SetOwner(ulong connectionId)
                     {
                         Owner = connectionId;
                     }

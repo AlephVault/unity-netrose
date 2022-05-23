@@ -169,6 +169,23 @@ namespace GameMeanMachine.Unity.NetRose
                                 }
                             );
                         });
+                        AddIncomingMessageHandler<ObjectMessage<Position>>("Object:Movement:Rejected", (proto, message) => {
+                            return RunInMainThreadValidatingScopeAndObject(
+                                message.ScopeId, message.ObjectId, async (obj) => {
+                                    XDebug debugger = new XDebug("NetRose", this, $"HandleMessage:Object:Movement:Rejected({message})", debug);
+                                    debugger.Start();
+                                    ushort x = message.Content.X;
+                                    ushort y = message.Content.Y;
+
+                                    debugger.Info($"Checking coordinates ({x}, {y})");
+                                    if (!await CheckInValidMapPosition(obj, x, y)) return;
+
+                                    debugger.Info($"Cancelling movement at ({x}, {y})");
+                                    obj.OnMovementRejected(x, y);
+                                    debugger.End();
+                                }
+                            );
+                        });
                         AddIncomingMessageHandler<ObjectMessage<Position>>("Object:Movement:Finished", (proto, message) => {
                             return RunInMainThreadValidatingScopeAndObject(
                                 message.ScopeId, message.ObjectId, async (obj) => {
