@@ -32,6 +32,26 @@ namespace GameMeanMachine.Unity.NetRose
                     Data ??= new ModelData();
                     Data.Serialize(serializer);
                 }
+
+                /// <summary>
+                ///   Creates an owned model out of a simple model.
+                /// </summary>
+                /// <param name="data">The data to wrap</param>
+                /// <returns>An owned model with the data (marked as owned)</returns>
+                public static OwnedModel<ModelData> AsOwned(ModelData data)
+                {
+                    return new OwnedModel<ModelData>() {Owned = true, Data = data};
+                }
+                
+                /// <summary>
+                ///   Creates an owned model out of a simple model.
+                /// </summary>
+                /// <param name="data">The data to wrap</param>
+                /// <returns>An owned model with the data (marked as not owned)</returns>
+                public static OwnedModel<ModelData> AsNotOwned(ModelData data)
+                {
+                    return new OwnedModel<ModelData>() {Owned = false, Data = data};
+                }
             }
         }
     }
