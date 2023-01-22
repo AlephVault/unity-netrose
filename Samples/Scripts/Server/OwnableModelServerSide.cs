@@ -1,4 +1,5 @@
 using AlephVault.Unity.Meetgard.Types;
+using AlephVault.Unity.Binary.Wrappers;
 using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
 using GameMeanMachine.Unity.NetRose.Types.Models;
 
@@ -13,8 +14,8 @@ namespace GameMeanMachine.Unity.NetRose
             {
                 public float LastCommandTime = 0;
 
-                private static OwnedModel<Nothing> Owned = new OwnedModel<Nothing>() { Owned = true, Data = Nothing.Instance};
-                private static OwnedModel<Nothing> NotOwned = new OwnedModel<Nothing>() { Owned = false, Data = Nothing.Instance};
+                private static OwnedModel<Nothing> Owned = OwnedModel<Nothing>.AsOwned(Nothing.Instance);
+                private static OwnedModel<Nothing> NotOwned = OwnedModel<Nothing>.AsNotOwned(Nothing.Instance);
 
                 protected override OwnedModel<Nothing> GetInnerFullData(ulong connectionId)
                 {

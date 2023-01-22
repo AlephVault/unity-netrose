@@ -19,7 +19,7 @@ namespace GameMeanMachine.Unity.NetRose
                 {
                 }
                 
-                protected override void UpdateOwnedFrom(Nothing refreshData)
+                protected override void UpdateFrom(Nothing refreshData)
                 {
                 }
             }
