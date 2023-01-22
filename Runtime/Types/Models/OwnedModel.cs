@@ -34,6 +34,24 @@ namespace GameMeanMachine.Unity.NetRose
                 }
 
                 /// <summary>
+                ///   A default empty constructor.
+                /// </summary>
+                public OwnedModel()
+                {
+                }
+
+                /// <summary>
+                ///   A constructor with more arguments.
+                /// </summary>
+                /// <param name="owned">Whether it is owned or not</param>
+                /// <param name="data">The wrapped data</param>
+                public OwnedModel(bool owned, ModelData data)
+                {
+                    Owned = owned;
+                    Data = data;
+                }
+
+                /// <summary>
                 ///   Creates an owned model out of a simple model.
                 /// </summary>
                 /// <param name="data">The data to wrap</param>

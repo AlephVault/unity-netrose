@@ -52,9 +52,16 @@ namespace Server.Authoring.Behaviours.NetworkObjects.Models
         // return the proper data in the following Get*Data methods.
 
         public readonly #SPAWNDATA_TYPE# SpawnData = new #SPAWNDATA_TYPE#();
-        private OwnedModel<#SPAWNDATA_TYPE#> ownedSpawnData = OwnedModel<#SPAWNDATA_TYPE#>.AsOwned(SpawnData);
-        private OwnedModel<#SPAWNDATA_TYPE#> notOwnedSpawnData = OwnedModel<#SPAWNDATA_TYPE#>.AsNotOwned(SpawnData);
+        private OwnedModel<#SPAWNDATA_TYPE#> ownedSpawnData;
+        private OwnedModel<#SPAWNDATA_TYPE#> notOwnedSpawnData;
         public #REFRESHDATA_TYPE# RefreshData = new #REFRESHDATA_TYPE#();
+        
+        protected void Awake()
+        {
+            base.Awake();
+            ownedSpawnData = new OwnedModel<#SPAWNDATA_TYPE#>(true, SpawnData);
+            notOwnedSpawnData = new OwnedModel<#SPAWNDATA_TYPE#>(false, SpawnData);
+        }
         
         protected override OwnedModel<#SPAWNDATA_TYPE#> GetInnerFullData(ulong connectionId)
         {

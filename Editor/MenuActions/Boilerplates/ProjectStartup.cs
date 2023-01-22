@@ -24,7 +24,7 @@ namespace GameMeanMachine.Unity.NetRose
             /// </summary>
             public static class ProjectStartup
             {
-                [MenuItem("Assets/Create/Net Rose/Boilerplates/Project Startup", false, 11)]
+                [MenuItem("Assets/Create/Net Rose/Boilerplates/Project Startup", false, 13)]
                 public static void ExecuteBoilerplate()
                 {
                     WindRose.MenuActions.Boilerplates.ProjectStartup.ExecuteBoilerplate();
