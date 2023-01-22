@@ -46,18 +46,6 @@ namespace GameMeanMachine.Unity.NetRose
                     /// <param name="fullData">The full data, without ownership</param>
                     protected abstract void InflateOwnedFrom(SpawnData fullData);
 
-                    protected override void UpdateFrom(RefreshData refreshData)
-                    {
-                        UpdateOwnedFrom(refreshData);
-                        Update();
-                    }
-
-                    /// <summary>
-                    ///   Updates the owned data. This is done before the update.
-                    /// </summary>
-                    /// <param name="refreshData">The refresh data</param>
-                    protected abstract void UpdateOwnedFrom(RefreshData refreshData);
-
                     private void Update()
                     {
                         if (isOwned && camera) camera.transform.position = new Vector3(
