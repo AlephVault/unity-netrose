@@ -1,0 +1,20 @@
+{
+    "name": "GameMeanMachine.Unity.NetRose.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f90bbbab12f82970aadf435cc687514a",
+        "GUID:d2803140f73c81547b3a8d3b9bf59ac5",
+        "GUID:b936c45d4ab60b6779c3d14d6a9e4086"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
