@@ -18,9 +18,9 @@ namespace GameMeanMachine.Unity.NetRose
             ///     - Client/: Objects/, Scopes/.
             ///     - Server/: Objects/, Scopes/.
             ///   - Scripts/Client/:
-            ///     - Authoring/Behaviours/Protocols/Models/.
+            ///     - Authoring/Behaviours/NetworkObjects/Models/.
             ///   - Scripts/Server/:
-            ///     - Authoring/Behaviours/Protocols/Models/.
+            ///     - Authoring/Behaviours/NetworkObjects/Models/.
             /// </summary>
             public static class ProjectStartup
             {
@@ -36,7 +36,7 @@ namespace GameMeanMachine.Unity.NetRose
                             .IntoDirectory("Client", false)
                                 .IntoDirectory("Authoring", false)
                                     .IntoDirectory("Behaviours", false)
-                                        .IntoDirectory("Protocols", false)
+                                        .IntoDirectory("NetworkObjects")
                                             .IntoDirectory("Models")
                                             .End()
                                         .End()
@@ -46,7 +46,7 @@ namespace GameMeanMachine.Unity.NetRose
                             .IntoDirectory("Server", false)
                                 .IntoDirectory("Authoring", false)
                                     .IntoDirectory("Behaviours", false)
-                                        .IntoDirectory("Protocols", false)
+                                        .IntoDirectory("NetworkObjects")
                                             .IntoDirectory("Models")
                                             .End()
                                         .End()
