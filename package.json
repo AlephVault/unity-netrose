@@ -1,12 +1,12 @@
 {
   "name": "com.gamemeanmachine.unity.netrose",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "displayName": "Game Mean Machine - Unity - NetRose",
   "description": "Allows the developer to create an orthogonal MMORPG game using a maps layout, based on WindRose and AlephVault's Meetgard.",
   "unity": "2020.3",
   "dependencies": {
-    "com.gamemeanmachine.unity.windrose": "0.0.5",
-    "com.alephvault.unity.meetgard.scopes": "0.0.2"
+    "com.gamemeanmachine.unity.windrose": "0.0.6",
+    "com.alephvault.unity.meetgard.scopes": "0.0.6"
   },
   "author": {
     "name": "Game Mean Machine",
