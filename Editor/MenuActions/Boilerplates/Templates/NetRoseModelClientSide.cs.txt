@@ -2,7 +2,7 @@ using AlephVault.Unity.Meetgard.Types;
 using AlephVault.Unity.Binary.Wrappers;
 using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
 
-namespace Client.Authoring.Behaviours.NetworkObjects.Models
+namespace Client.Authoring.Behaviours.NetworkObjects
 {
     public class #SCRIPTNAME# : NetRoseModelClientSide<#SPAWNDATA_TYPE#, #REFRESHDATA_TYPE#>
     {

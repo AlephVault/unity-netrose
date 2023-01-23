@@ -3,7 +3,7 @@ using AlephVault.Unity.Binary.Wrappers;
 using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
 using GameMeanMachine.Unity.NetRose.Types.Models;
 
-namespace Client.Authoring.Behaviours.NetworkObjects.Models
+namespace Client.Authoring.Behaviours.NetworkObjects
 {
     public class #SCRIPTNAME# : OwnedNetRoseModelClientSide<#SPAWNDATA_TYPE#, #REFRESHDATA_TYPE#>
     {

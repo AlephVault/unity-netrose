@@ -55,7 +55,7 @@ The base name has to be chosen (carefully and according to the game design):
 - It must start with an uppercase letter.
 - It must continue with letters, numbers, and/or underscores.
 
-The Spawn and Refresh data types must be already existing types, both implementing ISerializable. They can be:
+The Spawn and Refresh data types must be already existing types, both implementing ISerializable. They can:
 - Be simple or fully-qualified names.
 - Start with upper or lowercase letters, and continue with letters, numbers and/or underscores.
 
@@ -124,7 +124,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                     string directory = "Packages/com.gamemeanmachine.unity.netrose/" +
                                        "Editor/MenuActions/Boilerplates/Templates";
 
-                    // The protocol templates.
+                    // The network object templates.
                     TextAsset mcs = AssetDatabase.LoadAssetAtPath<TextAsset>(
                         directory + (useOwned ? "/OwnedNetRoseModelClientSide.cs.txt" : "/NetRoseModelClientSide.cs.txt")
                     );
@@ -169,11 +169,9 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 /// <summary>
                 ///   Opens a dialog to execute the strategy creation boilerplate.
                 /// </summary>
-                [MenuItem("Assets/Create/Net Rose/Boilerplates/Networked Object Behaviours", false, 14)]
+                [MenuItem("Assets/Create/Net Rose/Boilerplates/Create Networked Object Behaviours", false, 14)]
                 public static void ExecuteBoilerplate()
                 {
-                    DumpProtocolTemplates("PlayerCharacter", "String", "String", false);
-                    DumpProtocolTemplates("NPC", "String", "String", true);
                     CreateNetworkedObjectWindow window = ScriptableObject.CreateInstance<CreateNetworkedObjectWindow>();
                     Vector2 size = new Vector2(750, 332);
                     window.position = new Rect(new Vector2(110, 250), size);

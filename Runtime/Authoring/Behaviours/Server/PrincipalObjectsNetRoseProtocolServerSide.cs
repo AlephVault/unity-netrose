@@ -215,7 +215,17 @@ namespace GameMeanMachine.Unity.NetRose
                         t.SetOwner(connectionId);
                         
                         // Invoke the custom initialization.
-                        beforeAttach?.Invoke(t);
+                        try
+                        {
+                            beforeAttach?.Invoke(t);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogWarning(
+                                $"An exception occurred while initializing a principal!\n" +
+                                e.StackTrace
+                            );
+                        }
                     }
 
                     /// <summary>
@@ -254,6 +264,27 @@ namespace GameMeanMachine.Unity.NetRose
                         }
                     }
 
+                    /// <summary>
+                    ///   Tells whether there is a principal for a given connection id.
+                    /// </summary>
+                    /// <param name="connectionId">The connection to check the principal for</param>
+                    /// <returns>Whether a principal exists for that connection id</returns>
+                    public bool HasPrincipal(ulong connectionId)
+                    {
+                        return objects.ContainsKey(connectionId);
+                    }
+
+                    /// <summary>
+                    ///   Tries getting the principal for a given connection id.
+                    /// </summary>
+                    /// <param name="connectionId">The connection to get the principal for</param>
+                    /// <param name="principal">The obtained principal</param>
+                    /// <returns>Whether a principal exists for that connection id</returns>
+                    public bool TryGetPrincipal(ulong connectionId, out T principal)
+                    {
+                        return objects.TryGetValue(connectionId, out principal);
+                    }
+
                     // Attaches the object to a new map, and invokes the afterAttach callback.
                     private void AttachObj(T obj, Map toMap, ushort x, ushort y, Action<T> afterAttach)
                     {
@@ -264,7 +295,17 @@ namespace GameMeanMachine.Unity.NetRose
                         }
                         
                         // Invoke the custom initialization.
-                        afterAttach?.Invoke(obj);
+                        try
+                        {
+                            afterAttach?.Invoke(obj);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogWarning(
+                                $"An exception occurred while initializing a principal!\n" +
+                                e.StackTrace
+                            );
+                        }
                     }
 
                     // Ensures the connection doesn't already have a principal object.
