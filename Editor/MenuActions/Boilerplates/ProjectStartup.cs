@@ -18,9 +18,9 @@ namespace GameMeanMachine.Unity.NetRose
             ///     - Client/: Objects/, Scopes/.
             ///     - Server/: Objects/, Scopes/.
             ///   - Scripts/Client/:
-            ///     - Authoring/Behaviours/NetworkObjects/Models/.
+            ///     - Authoring/Behaviours/NetworkObjects/.
             ///   - Scripts/Server/:
-            ///     - Authoring/Behaviours/NetworkObjects/Models/.
+            ///     - Authoring/Behaviours/NetworkObjects/.
             /// </summary>
             public static class ProjectStartup
             {
