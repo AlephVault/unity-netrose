@@ -358,6 +358,7 @@ namespace GameMeanMachine.Unity.NetRose
                     {
                         T principal = GetPrincipal(connectionId);
                         MapObject obj = principal.MapObject;
+                        obj.Orientation = direction;
                         obj.StartMovement(direction, obj.IsMoving, queue);
                     }
 
