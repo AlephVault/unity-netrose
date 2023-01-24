@@ -24,12 +24,28 @@ namespace GameMeanMachine.Unity.NetRose
             /// </summary>
             public static class ProjectStartup
             {
-                [MenuItem("Assets/Create/Net Rose/Boilerplates/Project Startup", false, 13)]
+                [MenuItem("Assets/Create/Net Rose/Boilerplates/Project Startup", false, 204)]
                 public static void ExecuteBoilerplate()
                 {
                     WindRose.MenuActions.Boilerplates.ProjectStartup.ExecuteBoilerplate();
                     AlephVault.Unity.Meetgard.MenuActions.Boilerplates.ProjectStartup.ExecuteBoilerplate();
                     new Boilerplate()
+                        .IntoDirectory("Objects", false)
+                            .IntoDirectory("Prefabs", false)
+                                .IntoDirectory("Client")
+                                    .IntoDirectory("Objects")
+                                    .End()
+                                    .IntoDirectory("Scopes")
+                                    .End()
+                                .End()
+                                .IntoDirectory("Server")
+                                    .IntoDirectory("Objects")
+                                    .End()
+                                    .IntoDirectory("Scopes")
+                                    .End()
+                                .End()
+                            .End()
+                        .End()
                         .IntoDirectory("Scripts", false)
                             .IntoDirectory("Client", false)
                                 .IntoDirectory("Authoring", false)
