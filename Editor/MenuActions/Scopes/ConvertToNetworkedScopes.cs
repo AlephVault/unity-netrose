@@ -1,6 +1,8 @@
-using System;
+using System.Linq;
+using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
+using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
+using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace GameMeanMachine.Unity.NetRose
@@ -11,24 +13,41 @@ namespace GameMeanMachine.Unity.NetRose
         {
             public static class ConvertToNetworkedScopes
             {
+                private const string PREFIXDIR_CORE = "Assets/Objects/Prefabs/Core/Scopes/";
+                private const string PREFIXDIR_CLIENT = "Assets/Objects/Prefabs/Client/Scopes/";
+                private const string PREFIXDIR_SERVER = "Assets/Objects/Prefabs/Server/Scopes/";
+                
                 [MenuItem("Assets/Create/Net Rose/Objects/Networked Object Scopes (From 1+ selected core object scopes)", false, priority = 203)]
                 public static void ExecuteWrapper()
                 {
-                    Type invalid = Type.GetType(
-                        "GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server.NetRoseScopeServerSide, Pija"
-                    ); 
-                    Debug.Log($"Type: {(invalid == null ? "null" : invalid.FullName)}");
-                    Type tortor = Type.GetType(
-                        "Tortor, Assembly-CSharp"
-                    );
-                    Debug.Log($"Type: {(tortor == null ? "null" : tortor.FullName)}");
-                    Debug.Log($"Type: {System.Type.GetType("Client.Authoring.Behaviours.NetworkObjects.MyBehaviourClientSide, Assembly-CSharp")}");
-                    Debug.Log($"Type: {System.Type.GetType("Server.Authoring.Behaviours.NetworkObjects.MyBehaviourServerSide, Assembly-CSharp")}");
-                    Debug.Log($"Type: {System.Type.GetType("GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server.NetRoseScopeServerSide, GameMeanMachine.Unity.NetRose.Runtime")}");
-                    // foreach(string guid in AssetDatabase.FindAssets("t:script"))
-                    // {
-                    //     Debug.Log("path: " + AssetDatabase.GUIDToAssetPath(guid));
-                    // };
+                    foreach (var obj in Selection.GetFiltered<Scope>(SelectionMode.Assets))
+                    {
+                        string path = AssetDatabase.GetAssetPath(obj);
+                        if (path.StartsWith(PREFIXDIR_CORE))
+                        {
+                            string subPath = path.Substring(PREFIXDIR_CORE.Length);
+                            
+                            string clientPath = PREFIXDIR_CLIENT + subPath;
+                            GameObject clientObj = (GameObject)PrefabUtility.InstantiatePrefab(obj.gameObject, null);
+                            clientObj.AddComponent<NetRoseScopeClientSide>();
+                            PrefabUtility.SaveAsPrefabAsset(clientObj.gameObject, clientPath);
+                            Object.DestroyImmediate(clientObj);
+
+                            string serverPath = PREFIXDIR_SERVER + subPath;
+                            GameObject serverObj = (GameObject)PrefabUtility.InstantiatePrefab(obj.gameObject, null);
+                            serverObj.AddComponent<NetRoseScopeServerSide>();
+                            PrefabUtility.SaveAsPrefabAsset(serverObj.gameObject, serverPath);
+                            Object.DestroyImmediate(serverObj);
+                        }
+                    }
+                }
+
+                [MenuItem("Assets/Create/Net Rose/Objects/Networked Object Scopes (From 1+ selected core object scopes)", true)]
+                public static bool CanExecuteWrapper()
+                {
+                    return (from obj in Selection.GetFiltered<Scope>(SelectionMode.Assets)
+                        where AssetDatabase.GetAssetPath(obj).StartsWith(PREFIXDIR_CORE)
+                        select obj).Any();
                 }
             }
         }

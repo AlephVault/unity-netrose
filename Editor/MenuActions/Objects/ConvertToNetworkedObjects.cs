@@ -5,6 +5,7 @@ using AlephVault.Unity.MenuActions.Utils;
 using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace GameMeanMachine.Unity.NetRose
 {
@@ -112,11 +113,13 @@ WARNING: THIS MIGHT OVERRIDE EXISTING ASSETS. Always use proper source code mana
                             GameObject clientObj = (GameObject)PrefabUtility.InstantiatePrefab(obj.gameObject);
                             clientObj.AddComponent(clientSideType);
                             PrefabUtility.SaveAsPrefabAsset(clientObj.gameObject, clientPath);
+                            Object.DestroyImmediate(clientObj);
 
                             string serverPath = PREFIXDIR_SERVER + subPath;
                             GameObject serverObj = (GameObject)PrefabUtility.InstantiatePrefab(obj.gameObject);
                             serverObj.AddComponent(serverSideType);
                             PrefabUtility.SaveAsPrefabAsset(serverObj.gameObject, serverPath);
+                            Object.DestroyImmediate(serverObj);
                         }
                     }
                 }
