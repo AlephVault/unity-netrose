@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using AlephVault.Unity.MenuActions.Utils;
 using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
@@ -124,12 +125,20 @@ WARNING: THIS MIGHT OVERRIDE EXISTING ASSETS. Always use proper source code mana
                 public static void ExecuteWrapper()
                 {
                     ConvertToNetworkedObjectsWindow window = ScriptableObject.CreateInstance<ConvertToNetworkedObjectsWindow>();
-                    Vector2 size = new Vector2(750, 332);
+                    Vector2 size = new Vector2(750, 318);
                     window.position = new Rect(new Vector2(110, 250), size);
                     window.minSize = size;
                     window.maxSize = size;
                     window.titleContent = new GUIContent("Networked Objects conversion");
                     window.ShowUtility();
+                }
+
+                [MenuItem("Assets/Create/Net Rose/Objects/Networked Object Prefabs (From 1+ selected core object prefabs)", true)]
+                public static bool CanExecuteWrapper()
+                {
+                    return (from obj in Selection.GetFiltered<MapObject>(SelectionMode.Assets)
+                            where AssetDatabase.GetAssetPath(obj).StartsWith(PREFIXDIR_CORE)
+                            select obj).Any();
                 }
             }
         }
