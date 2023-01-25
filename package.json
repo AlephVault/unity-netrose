@@ -6,7 +6,7 @@
   "unity": "2020.3",
   "dependencies": {
     "com.gamemeanmachine.unity.windrose": "0.0.6",
-    "com.alephvault.unity.meetgard.scopes": "0.0.6"
+    "com.alephvault.unity.meetgard.scopes": "0.0.3"
   },
   "author": {
     "name": "Game Mean Machine",
