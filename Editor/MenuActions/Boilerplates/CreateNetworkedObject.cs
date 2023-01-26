@@ -167,7 +167,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
 
                 
                 /// <summary>
-                ///   Opens a dialog to execute the strategy creation boilerplate.
+                ///   Opens a dialog to execute the behaviours creation boilerplate.
                 /// </summary>
                 [MenuItem("Assets/Create/Net Rose/Boilerplates/Create Networked Object Behaviours", false, 204)]
                 public static void ExecuteBoilerplate()
