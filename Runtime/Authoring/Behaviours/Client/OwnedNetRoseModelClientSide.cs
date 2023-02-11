@@ -1,7 +1,6 @@
 ﻿using AlephVault.Unity.Binary;
 using GameMeanMachine.Unity.NetRose.Types.Models;
 using GameMeanMachine.Unity.WindRose.Types;
-using UnityEngine;
 
 
 namespace GameMeanMachine.Unity.NetRose
@@ -21,8 +20,7 @@ namespace GameMeanMachine.Unity.NetRose
                     where SpawnData : class, ISerializable, new()
                     where RefreshData : class, ISerializable, new()
                 {
-                    private bool isOwned;
-                    private Camera camera;
+                    public bool isOwned;
                     
                     /// <summary>
                     ///   Sets the ownership and delegates the call.
@@ -34,9 +32,7 @@ namespace GameMeanMachine.Unity.NetRose
                         isOwned = fullData.Owned;
                         PrincipalObjectsNetRoseProtocolClientSide protocol = 
                             Protocol.GetComponent<PrincipalObjectsNetRoseProtocolClientSide>();
-                        camera = protocol != null ? protocol.GetCamera() : Camera.main;
                         InflateOwnedFrom(fullData.Data);
-                        Update();
                     }
 
                     /// <summary>
@@ -45,13 +41,7 @@ namespace GameMeanMachine.Unity.NetRose
                     /// </summary>
                     /// <param name="fullData">The full data, without ownership</param>
                     protected abstract void InflateOwnedFrom(SpawnData fullData);
-
-                    private void Update()
-                    {
-                        if (isOwned && camera) camera.transform.position = new Vector3(
-                            transform.position.x, transform.position.y, -10
-                        );
-                    }
+                    
 
                     /// <summary>
                     ///   Returns whether the object is owned by the current connection.
