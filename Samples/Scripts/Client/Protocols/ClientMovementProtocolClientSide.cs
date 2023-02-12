@@ -15,7 +15,7 @@ namespace GameMeanMachine.Unity.NetRose
             namespace Protocols
             {
                 [RequireComponent(typeof(Throttler))]
-                [RequireComponent(typeof(PrincipalObjectsNetRoseProtocolClientSide))]
+                [RequireComponent(typeof(NetRoseProtocolClientSide))]
                 public class ClientMovementProtocolClientSide : ProtocolClientSide<ClientMovementProtocolDefinition>
                 {
                     private Throttler throttler;

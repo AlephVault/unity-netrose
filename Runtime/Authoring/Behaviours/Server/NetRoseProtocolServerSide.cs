@@ -12,7 +12,9 @@ using GameMeanMachine.Unity.WindRose.Types;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
 using UnityEngine;
+using Scope = AlephVault.Unity.Meetgard.Scopes.Types.Constants.Scope;
 
 namespace GameMeanMachine.Unity.NetRose
 {
@@ -39,6 +41,18 @@ namespace GameMeanMachine.Unity.NetRose
                     /// </summary>
                     public ScopesProtocolServerSide ScopesProtocolServerSide { get; private set; }
 
+                    // A way to tell scopes by their name. The name is optional,
+                    // and scopes not having a name will not be included here.
+                    // By default, all the "default scopes" will be loaded. If
+                    // they have a name, they will be included here.
+                    private Dictionary<string, NetRoseScopeServerSide> namedScopes =
+                        new Dictionary<string, NetRoseScopeServerSide>();
+                    
+                    /// <summary>
+                    ///   Tells whether the named scopes are ready or not.
+                    /// </summary>
+                    internal bool AreNamedScopesReady { get; private set; }
+
                     private Func<IEnumerable<ulong>, ObjectMessage<Attachment>, Dictionary<ulong, Task>> ObjectAttachedBroadcaster;
                     private Func<IEnumerable<ulong>, ObjectMessage<Nothing>, Dictionary<ulong, Task>> ObjectDetachedBroadcaster;
                     private Func<IEnumerable<ulong>, ObjectMessage<MovementStart>, Dictionary<ulong, Task>> ObjectMovementStartedBroadcaster;
@@ -49,13 +63,14 @@ namespace GameMeanMachine.Unity.NetRose
                     private Func<IEnumerable<ulong>, ObjectMessage<Enum<Direction>>, Dictionary<ulong, Task>> ObjectOrientationChangedBroadcaster;
                     private Func<ulong, ObjectMessage<Position>, Task> ObjectMovementRejectedSender;
                     
-                    
                     /// <summary>
                     ///   An after-awake setup.
                     /// </summary>
                     protected override void Setup()
                     {
                         ScopesProtocolServerSide = GetComponent<ScopesProtocolServerSide>();
+                        ScopesProtocolServerSide.OnLoadComplete += OnLoadComplete;
+                        ScopesProtocolServerSide.OnUnloadComplete += OnUnloadComplete;
                     }
 
                     protected override void Initialize()
@@ -70,7 +85,24 @@ namespace GameMeanMachine.Unity.NetRose
                         ObjectOrientationChangedBroadcaster = MakeBroadcaster<ObjectMessage<Enum<Direction>>>("Object:Orientation:Changed");
                         ObjectMovementRejectedSender = MakeSender<ObjectMessage<Position>>("Object:Movement:Rejected");
                     }
+                    
+                    // Here, some methods to manage the world dictionary.
 
+                    /// <summary>
+                    ///   Tries to add the scope. It will fail if the name is
+                    ///   already in use by another scope.
+                    /// </summary>
+                    /// <param name="name">The name of the scope to add. It will never be empty/spaces-only</param>
+                    /// <param name="scope">The reference to add. It will never be null</param>
+                    /// <returns>Whether it added it or not</returns>
+                    internal bool AddNamedScope(string name, NetRoseScopeServerSide scope)
+                    {
+                        if (namedScopes.ContainsKey(name)) return false;
+                        namedScopes.Add(name, scope);
+                        scope.Name = name;
+                        return true;
+                    }
+                    
                     // From now, a lot of internal functions are to be dispatched.
 
                     /// <summary>
@@ -247,6 +279,30 @@ namespace GameMeanMachine.Unity.NetRose
                         });
                     }
 
+                    private void OnLoadComplete()
+                    {
+                        namedScopes.Clear();
+                        foreach(ScopeServerSide scopeSS in ScopesProtocolServerSide.LoadedScopes.Values)
+                        {
+                            if (scopeSS.PrefabId == Scope.DefaultPrefab)
+                            {
+                                NetRoseScopeServerSide nrScopeSS = scopeSS.GetComponent<NetRoseScopeServerSide>();
+                                if (nrScopeSS && nrScopeSS.DefaultName.Trim().Length > 0)
+                                {
+                                    AddNamedScope(nrScopeSS.DefaultName, nrScopeSS);
+                                }
+                            }
+                        }
+
+                        AreNamedScopesReady = true;
+                    }
+                    
+                    private void OnUnloadComplete()
+                    {
+                        AreNamedScopesReady = false;
+                        namedScopes.Clear();
+                    }
+
                     /// <summary>
                     ///   Initializes a prefab. If it is a netrose server side
                     ///   object, it invokes Initialize() in the related map
@@ -311,6 +367,23 @@ namespace GameMeanMachine.Unity.NetRose
                         if (obj is INetRoseModelServerSide netroseObj) netroseObj.MapObject.Initialize();
                         debugger.End();
                         return obj;
+                    }
+
+                    /// <summary>
+                    ///   Gets a map from a named scope.
+                    /// </summary>
+                    /// <param name="name">The scope name</param>
+                    /// <param name="mapIndex">The index of the map</param>
+                    /// <returns>The reference to a map</returns>
+                    public Map GetMap(string name, int mapIndex)
+                    {
+                        if (namedScopes.TryGetValue(name, out var scopeSS) &&
+                            mapIndex >= 0 && mapIndex < scopeSS.Maps.Count)
+                        {
+                            return scopeSS.Maps[mapIndex];
+                        }
+
+                        return null;
                     }
                 }
             }

@@ -30,8 +30,6 @@ namespace GameMeanMachine.Unity.NetRose
                     protected override void InflateFrom(OwnedModel<SpawnData> fullData)
                     {
                         isOwned = fullData.Owned;
-                        PrincipalObjectsNetRoseProtocolClientSide protocol = 
-                            Protocol.GetComponent<PrincipalObjectsNetRoseProtocolClientSide>();
                         InflateOwnedFrom(fullData.Data);
                     }
 

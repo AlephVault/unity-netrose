@@ -40,21 +40,76 @@ namespace GameMeanMachine.Unity.NetRose
                     /// </summary>
                     public Scope Maps { get; private set; }
 
+                    /// <summary>
+                    ///   The default scope name, for when we want these scopes to be
+                    ///   added to the named scopes list. This is ignored for scopes
+                    ///   loaded as extra.
+                    /// </summary>
+                    [SerializeField]
+                    private string defaultName;
+
+                    /// <summary>
+                    ///   See <see cref="defaultName" />.
+                    /// </summary>
+                    public string DefaultName => defaultName;
+                    
+                    /// <summary>
+                    ///   The current scope name. Derived directly from the default name,
+                    ///   if the scope is instantiated by default, or explicitly chosen
+                    ///   after loading, if the scope comes from the extra templates. 
+                    /// </summary>
+                    public string Name { get; internal set; }
+
                     private void Awake()
                     {
                         ScopeServerSide = GetComponent<ScopeServerSide>();
                         Maps = GetComponent<Scope>();
                         ScopeServerSide.OnLoad += ScopeServerSide_OnLoad;
+                        ScopeServerSide.OnUnload += ScopeServerSide_OnUnload;
                     }
 
                     private void OnDestroy()
                     {
                         ScopeServerSide.OnLoad -= ScopeServerSide_OnLoad;
+                        ScopeServerSide.OnUnload -= ScopeServerSide_OnUnload;
                     }
 
                     private async Task ScopeServerSide_OnLoad()
                     {
                         NetRoseProtocolServerSide = ScopeServerSide.Protocol.GetComponent<NetRoseProtocolServerSide>();
+                    }
+
+                    private async Task ScopeServerSide_OnUnload()
+                    {
+                        Name = "";
+                    }
+
+                    /// <summary>
+                    ///   Registers this scope into the named scopes by assigning
+                    ///   them a particular name.
+                    /// </summary>
+                    /// <param name="name"></param>
+                    /// <returns></returns>
+                    public bool RegisterNamedScope(string name)
+                    {
+                        // Reject if the name is empty.
+                        if ((name ?? "").Trim().Length == 0) return false;
+
+                        // Reject if the scope is not loaded, or is default.
+                        if (ScopeServerSide.Id == 0 || ScopeServerSide.PrefabId == 0 ||
+                            ScopeServerSide.PrefabId == AlephVault.Unity.Meetgard.Scopes.Types.Constants.Scope.DefaultPrefab) return false;
+
+                        // Reject if the world is not loaded (and this reference was
+                        // kept alive after the entire world was unloaded).
+                        if (!NetRoseProtocolServerSide.AreNamedScopesReady) return false;
+                        
+                        // Reject if the scope already has a name.
+                        if (Name != "") return false;
+
+                        // Reject if the name is already in use.
+                        if (!NetRoseProtocolServerSide.AddNamedScope(name, this)) return false;
+
+                        return true;
                     }
 
                     /// <summary>
@@ -74,10 +129,11 @@ namespace GameMeanMachine.Unity.NetRose
                     /// <summary>
                     ///   Returns an iterator of all the connections in the scope.
                     /// </summary>
-                    /// <returns>The iterator</returns>
-                    public IEnumerable<ulong> Connections()
+                    /// <param name="except">Excludes some connection to be returned</param>
+                    /// <returns>The iterator of connection ids</returns>
+                    public IEnumerable<ulong> Connections(ISet<ulong> except = null)
                     {
-                        return ScopeServerSide.Connections();
+                        return ScopeServerSide.Connections(except);
                     }
 
                     // Now, the internal protocol methods are to be defined here.

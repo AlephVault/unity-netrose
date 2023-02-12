@@ -20,19 +20,29 @@ namespace GameMeanMachine.Unity.NetRose
             namespace Server
             {
                 /// <summary>
-                ///   This is a particular subclass of <see cref="NetRoseProtocolServerSide"/>
-                ///   that provides methods to handle creation-and-assignment of owned objects
-                ///   for a connection (and start syncing the current scope) and also handle
-                ///   the de-assignment-and-destruction of o owned objects (and sending the
-                ///   former owners to Limbo). When those features are used... only depends
-                ///   on the developer's needs.
+                ///   <para>
+                ///     This is a particular subclass of <see cref="NetRoseProtocolServerSide"/>
+                ///     that provides methods to handle creation-and-assignment of owned objects
+                ///     for a connection (and start syncing the current scope) and also handle
+                ///     the de-assignment-and-destruction of o owned objects (and sending the
+                ///     former owners to Limbo). When those features are used... only depends
+                ///     on the developer's needs.
+                ///   </para>
+                ///   <para>
+                ///     It also provides functions to get map references by (scope, index).
+                ///   </para>
                 /// </summary>
                 public class PrincipalObjectsNetRoseProtocolServerSide<T> : NetRoseProtocolServerSide
                     where T : ObjectServerSide, IServerOwned, INetRoseModelServerSide
                 {
                     protected const string UseDefaultKey = "";
                     protected const int UseDefaultIndex = -1;
-                    
+
+                    // Tracks NetRose scopes by their key. Empty or empty-like strings will
+                    // never be present by this mean. Also, depending on the scope type
+                    private Dictionary<string, NetRoseScopeServerSide> scopesByKey =
+                        new Dictionary<string, NetRoseScopeServerSide>();
+
                     // All the principal objects are meant to be tracked here..
                     private Dictionary<ulong, T> objects = new Dictionary<ulong, T>();
 
