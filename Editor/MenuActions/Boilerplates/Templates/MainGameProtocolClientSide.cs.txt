@@ -1,0 +1,140 @@
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
+using AlephVault.Unity.Meetgard.Authoring.Behaviours.Client;
+using Protocols;
+
+namespace Client.Authoring.Behaviours.Protocols
+{
+    // Uncomment this line if this class should use throttling.
+    // [RequireComponent(typeof(ClientSideThrottler))]
+    public class #SCRIPTNAME# : ProtocolClientSide<#PROTOCOLDEFINITION#>
+    {
+        // Uncomment these lines if this class should use throttling.
+        // Also, ensure the throttler has at least 3 throttling indices.
+        //
+        // private ClientSideThrottler throttler;
+        // private const int WalkThrottle = 0;
+        // private const int SimpleCommandThrottle = 1;
+        // private const int AimedCommandThrottle = 2;
+
+        // Typically, one of these games involves the ability
+        // to move in any of the 4 directions:
+        private Func<Task> SendMoveDown;
+        private Func<Task> SendMoveLeft;
+        private Func<Task> SendMoveRight;
+        private Func<Task> SendMoveUp;
+        // It might also involve simple commands:
+        private Func<Task> SendSomeSimpleCommand;
+        // It might also involve commands in certain map & position:
+        private Func<#AIM_TYPE#, Task> SendSomeAimedCommand;
+        
+        /// <summary>
+        ///   A Post-Awake hook.
+        /// </summary>
+        protected override void Setup()
+        {
+            // This method is optional. It can be removed.
+            // Uncomment this line if this class should use throttling.
+            // throttler = GetComponent<ClientSideThrottler>();
+        }
+        
+        /// <summary>
+        ///   Initializes the protocol senders once the server is ready.
+        /// </summary>
+        protected override void Initialize()
+        {
+            // Typically, one of these games involves the ability
+            // to move in any of the 4 directions:
+            SendMoveDown = MakeSender(#PROTOCOLDEFINITION#.MoveDown);
+            SendMoveLeft = MakeSender(#PROTOCOLDEFINITION#.MoveLeft);
+            SendMoveRight = MakeSender(#PROTOCOLDEFINITION#.MoveRight);
+            SendMoveUp = MakeSender(#PROTOCOLDEFINITION#.MoveUp);
+            // It might also involve simple commands:
+            SendSomeSimpleCommand = MakeSender(#PROTOCOLDEFINITION#.SomeSimpleCommand);
+            // It might also involve commands in certain map & position:
+            SendSomeAimedCommand = MakeSender(#PROTOCOLDEFINITION#.SomeAimedCommand);
+
+            // Finally, if using throttler, these lines might be more desirable:
+            //
+            // // Typically, one of these games involves the ability
+            // // to move in any of the 4 directions:
+            // SendMoveDown = throttler.MakeThrottledSender(SendMoveDown);
+            // SendMoveLeft = throttler.MakeThrottledSender(SendMoveLeft);
+            // SendMoveRight = throttler.MakeThrottledSender(SendMoveRight);
+            // SendMoveUp = throttler.MakeThrottledSender(SendMoveUp);
+            // // It might also involve simple commands:
+            // SendSomeSimpleCommand = throttler.MakeThrottledSender(SendSomeSimpleCommand);
+            // // It might also involve commands in certain map & position:
+            // SendSomeAimedCommand = throttler.MakeThrottledSender(SendSomeAimedCommand);
+        }
+        
+        /// <summary>
+        ///   Initializes the protocol handlers once the server is ready.
+        /// </summary>
+        protected override void SetIncomingMessageHandlers()
+        {
+            // This is the place to assign handlers to incoming messages.
+            // Since messages can be typed or untyped, as in the examples
+            // that were generated, there are two flavors for the message
+            // handling definition: typed, and untyped.
+            //
+            // AddIncomingMessageHandler("IntroduceYourself", async (proto) => {
+            //     // Notice how this message is not typed. The only argument
+            //     // is the protocol client side object itself.
+            //     //
+            //     // You can do what you want here, including sending messages:
+            //     // _ = SendHello(); // or: await SendHello();
+            //     // The difference is that, by awaiting, we ensure the message
+            //     // was actually sent or an error was triggered.
+            //     //
+            //     // PLEASE NOTE: IF YOUR CODE INVOLVES INTERACTION WITH UNITY
+            //     // COMPONENTS, THIS MUST ONLY OCCUR IN THE MAIN THREAD, and
+            //     // these handlers DO NOT RUN IN THE MAIN THREAD. You can do
+            //     // it by calling:
+            //     //
+            //     // await RunInMainThread(async () { ... the code ... });...
+            //     //
+            //     // Or, if waiting for it is not needed, just:
+            //     //
+            //     // _ = RunInMainThread(async () { ... the code ... });            
+            // });
+            //
+            // AddIncomingMessageHandler<MyType>("SomeTypedServerMessage", async (proto, msg) => {
+            //     // Notice how this message IS typed, as defined in the
+            //     // protocol definition. There is a new `msg` argument.
+            //     // This argument is of type MyType.
+            //     //
+            //     // Otherwise, this is the same as the untyped case.
+            // });
+        }
+        
+        /// <summary>
+        ///   Handler for when the connection is successfully established.
+        /// </summary>
+        public override async Task OnConnected()
+        {
+            // Do what you want, including sending messages.
+            // If you need to interact with Unity components,
+            // use RunInMainThread in the same way it is told
+            // in this example inside the incoming message
+            // handlers.
+        }
+
+        /// <summary>
+        ///   Handler for when the connection is terminated, be it graceful
+        ///   or due to an error.
+        /// </summary>
+        public override async Task OnDisconnected(Exception reason)
+        {
+            // The server was just disconnected. Do everything
+            // except attempting to send messages or access the
+            // connection somehow, since it was already ended.
+            //
+            // If you need to interact with Unity components,
+            // use RunInMainThread in the same way it is told
+            // in this example inside the incoming message
+            // handlers.
+        }
+    }
+}
