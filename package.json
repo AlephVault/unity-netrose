@@ -5,7 +5,7 @@
   "description": "Allows the developer to create an orthogonal MMORPG game using a maps layout, based on WindRose and AlephVault's Meetgard.",
   "unity": "2020.3",
   "dependencies": {
-    "com.gamemeanmachine.unity.windrose": "0.0.6",
+    "com.gamemeanmachine.unity.windrose": "0.0.7",
     "com.alephvault.unity.meetgard.scopes": "0.0.3",
     "com.alephvault.unity.meetgard": "0.0.4"
   },
