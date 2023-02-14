@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
 using AlephVault.Unity.Meetgard.Authoring.Behaviours.Server;
 using Protocols;
 
@@ -87,7 +88,7 @@ namespace Server.Authoring.Behaviours.Protocols
                 // await throttler.DoThrottled(clientId, async () => {
                     try
                     {
-                        principalProtocol.MoveDown(ulong connectionId, true);
+                        principalProtocol.MoveDown(connId, true);
                     }
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
@@ -98,7 +99,7 @@ namespace Server.Authoring.Behaviours.Protocols
                 // await throttler.DoThrottled(clientId, async () => {
                     try
                     {
-                        principalProtocol.MoveLeft(ulong connectionId, true);
+                        principalProtocol.MoveLeft(connId, true);
                     }
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
@@ -109,7 +110,7 @@ namespace Server.Authoring.Behaviours.Protocols
                 // await throttler.DoThrottled(clientId, async () => {
                     try
                     {
-                        principalProtocol.MoveRight(ulong connectionId, true);
+                        principalProtocol.MoveRight(connId, true);
                     }
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
@@ -120,7 +121,7 @@ namespace Server.Authoring.Behaviours.Protocols
                 // await throttler.DoThrottled(clientId, async () => {
                     try
                     {
-                        principalProtocol.MoveUp(ulong connectionId, true);
+                        principalProtocol.MoveUp(connId, true);
                     }
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
@@ -129,16 +130,66 @@ namespace Server.Authoring.Behaviours.Protocols
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
-                    /* DO SOMETHING HERE */
+                    try
+                    {
+                        Map map = GetPrincipal(connId).MapObject.ParentMap;
+                        if (!map) return;
+                        /* Do something here */
+
+                        /** Example: compute closest (x, y) for object
+                            according to its orientation and do like
+                            this:
+                        MapObject target = GetExactTarget(map, newX, newY);
+                        if (target) {
+                            // Something else here.
+                        }
+                        */
+                    }
+                    catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, SimpleCommandThrottle);                
             });
-            AddIncomingMessageHandler<#AIM_TYPE#>(#PRINCIPALPROTOCOL#.SomeAimedCommand, async (proto, connId) => {
+            AddIncomingMessageHandler<#AIM_TYPE#>(#PRINCIPALPROTOCOL#.SomeAimedCommand, async (proto, connId, aim) => {
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
-                    /* DO SOMETHING HERE */
+                    try
+                    {
+                        Map map = GetPrincipal(connId).MapObject.ParentMap;
+                        if (!map) return;
+                        Scope scope = map.ParentScope;
+                        if (!scope) return;
+                        Map newMap = scope[aim.Map];
+                        MapObject target = GetLowestTarget(newMap, aim.X, aim.Y);
+                        if (target) {
+                            /* Do something with the target */
+                        }
+                    }
+                    catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, AimedCommandThrottle);                
             });
+        }
+        
+        private MapObject GetLowestTarget(Map map, ushort x, ushort y)
+        {
+            // Ensure all your maps use spatial indices for this to match something.
+            IEnumerable<MapObject> objs = map.ObjectsLayer.StrategyHolder.Search(x + 0.5f, y + 0.5f);
+            MapObject lowestObj = null;
+            foreach(MapObject obj in objs)
+            {
+                if (lowestObj == null || obj.Y < lowestObj.Y) lowestObj = obj;
+            }
+            return lowestObj;
+        }
+
+        private MapObject GetExactTarget(Map map, ushort x, ushort y)
+        {
+            // Ensure all your maps use spatial indices for this to match something.
+            IEnumerable<MapObject> objs = map.ObjectsLayer.StrategyHolder.Search(x + 0.5f, y + 0.5f);
+            foreach(MapObject obj in objs)
+            {
+                if (obj.X == x && obj.Y == y) return obj;
+            }
+            return null;
         }
         
         /// <summary>
