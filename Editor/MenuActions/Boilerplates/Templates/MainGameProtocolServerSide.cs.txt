@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
+using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
 using AlephVault.Unity.Meetgard.Authoring.Behaviours.Server;
 using Protocols;
+using Protocols.Messages;
 
 namespace Server.Authoring.Behaviours.Protocols
 {
@@ -82,7 +85,7 @@ namespace Server.Authoring.Behaviours.Protocols
         {
             // Typically, one of these games involves the ability
             // to move in any of the 4 directions:
-            AddIncomingMessageHandler(#PRINCIPALPROTOCOL#.MoveDown, async (proto, connId) => {
+            AddIncomingMessageHandler(#PROTOCOLDEFINITION#.MoveDown, async (proto, connId) => {
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
@@ -93,7 +96,7 @@ namespace Server.Authoring.Behaviours.Protocols
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
             });
-            AddIncomingMessageHandler(#PRINCIPALPROTOCOL#.MoveLeft, async (proto, connId) => {
+            AddIncomingMessageHandler(#PROTOCOLDEFINITION#.MoveLeft, async (proto, connId) => {
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
@@ -104,7 +107,7 @@ namespace Server.Authoring.Behaviours.Protocols
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
             });
-            AddIncomingMessageHandler(#PRINCIPALPROTOCOL#.MoveRight, async (proto, connId) => {
+            AddIncomingMessageHandler(#PROTOCOLDEFINITION#.MoveRight, async (proto, connId) => {
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
@@ -115,7 +118,7 @@ namespace Server.Authoring.Behaviours.Protocols
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
             });
-            AddIncomingMessageHandler(#PRINCIPALPROTOCOL#.MoveUp, async (proto, connId) => {
+            AddIncomingMessageHandler(#PROTOCOLDEFINITION#.MoveUp, async (proto, connId) => {
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
@@ -126,13 +129,13 @@ namespace Server.Authoring.Behaviours.Protocols
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, WalkThrottle);
             });
-            AddIncomingMessageHandler(#PRINCIPALPROTOCOL#.SomeSimpleCommand, async (proto, connId) => {
+            AddIncomingMessageHandler(#PROTOCOLDEFINITION#.SomeSimpleCommand, async (proto, connId) => {
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
                     try
                     {
-                        Map map = GetPrincipal(connId).MapObject.ParentMap;
+                        Map map = principalProtocol.GetPrincipal(connId).MapObject.ParentMap;
                         if (!map) return;
                         /* Do something here */
 
@@ -148,13 +151,13 @@ namespace Server.Authoring.Behaviours.Protocols
                     catch(Exception e) { /* Handle this */ }
                 // }, (ulong clientId, DateTime when, int throttlesCount) => { /* handle this */ }, SimpleCommandThrottle);                
             });
-            AddIncomingMessageHandler<#AIM_TYPE#>(#PRINCIPALPROTOCOL#.SomeAimedCommand, async (proto, connId, aim) => {
+            AddIncomingMessageHandler<#AIM#>(#PROTOCOLDEFINITION#.SomeAimedCommand, async (proto, connId, aim) => {
                 // Uncomment the //-commented lines if using throttle:
                 //
                 // await throttler.DoThrottled(clientId, async () => {
                     try
                     {
-                        Map map = GetPrincipal(connId).MapObject.ParentMap;
+                        Map map = principalProtocol.GetPrincipal(connId).MapObject.ParentMap;
                         if (!map) return;
                         Scope scope = map.ParentScope;
                         if (!scope) return;
@@ -172,7 +175,7 @@ namespace Server.Authoring.Behaviours.Protocols
         private MapObject GetLowestTarget(Map map, ushort x, ushort y)
         {
             // Ensure all your maps use spatial indices for this to match something.
-            IEnumerable<MapObject> objs = map.ObjectsLayer.StrategyHolder.Search(x + 0.5f, y + 0.5f);
+            IEnumerable<MapObject> objs = map.ObjectsLayer.StrategyHolder.Search(x, y);
             MapObject lowestObj = null;
             foreach(MapObject obj in objs)
             {
@@ -184,7 +187,7 @@ namespace Server.Authoring.Behaviours.Protocols
         private MapObject GetExactTarget(Map map, ushort x, ushort y)
         {
             // Ensure all your maps use spatial indices for this to match something.
-            IEnumerable<MapObject> objs = map.ObjectsLayer.StrategyHolder.Search(x + 0.5f, y + 0.5f);
+            IEnumerable<MapObject> objs = map.ObjectsLayer.StrategyHolder.Search(x, y);
             foreach(MapObject obj in objs)
             {
                 if (obj.X == x && obj.Y == y) return obj;

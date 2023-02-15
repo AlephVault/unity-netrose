@@ -2,6 +2,8 @@ using AlephVault.Unity.Meetgard.Protocols;
 
 namespace Protocols
 {
+    using Messages;
+    
     public class #SCRIPTNAME# : ProtocolDefinition
     {
         // Typically, one of these games involves the ability
@@ -30,7 +32,7 @@ namespace Protocols
             // It might also involve simple commands:
             DefineClientMessage(SomeSimpleCommand);
             // It might also involve aimed commands:
-            DefineClientMessage<#AIM_TYPE#>(SomeAimedCommand);
+            DefineClientMessage<#AIM#>(SomeAimedCommand);
         }
     }
 }
