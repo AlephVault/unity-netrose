@@ -372,12 +372,12 @@ namespace GameMeanMachine.Unity.NetRose
                     /// <summary>
                     ///   Gets a map from a named scope.
                     /// </summary>
-                    /// <param name="name">The scope name</param>
+                    /// <param name="scopeName">The scope name</param>
                     /// <param name="mapIndex">The index of the map</param>
                     /// <returns>The reference to a map</returns>
-                    public Map GetMap(string name, int mapIndex)
+                    public Map GetMap(string scopeName, int mapIndex)
                     {
-                        if (namedScopes.TryGetValue(name, out var scopeSS) &&
+                        if (namedScopes.TryGetValue(scopeName, out var scopeSS) &&
                             mapIndex >= 0 && mapIndex < scopeSS.Maps.Count)
                         {
                             return scopeSS.Maps[mapIndex];
