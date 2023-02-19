@@ -41,7 +41,7 @@ namespace GameMeanMachine.Unity.NetRose
                     // Tells whether it is spawned or not.
                     private bool spawned = false;
 
-                    protected void Awake()
+                    protected virtual void Awake()
                     {
                         OnSpawned += NetRoseModelClientSide_OnSpawned;
                         OnDespawned += NetRoseModelClientSide_OnDespawned;
@@ -50,7 +50,7 @@ namespace GameMeanMachine.Unity.NetRose
                         MapObject.onMovementCancelled.AddListener(OnMovementCancelled);
                     }
 
-                    protected void OnDestroy()
+                    protected virtual void OnDestroy()
                     {
                         OnSpawned -= NetRoseModelClientSide_OnSpawned;
                         OnDespawned -= NetRoseModelClientSide_OnDespawned;

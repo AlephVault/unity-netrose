@@ -8,6 +8,11 @@ namespace Client.Authoring.Behaviours.NetworkObjects
 {
     public class #SCRIPTNAME# : OwnedNetRoseModelClientSide<#SPAWNDATA_TYPE#, #REFRESHDATA_TYPE#>
     {
+        /// <summary>
+        ///   Tracks the current instance.
+        /// </summary>
+        public static #SCRIPTNAME# Instance = null { get; private set; }
+        
         // THIS BEHAVIOUR IS MEANT TO BE ATTACHED TO MAP OBJECTS
         // THAT ARE MEANT TO BE SYNCHRONIZED THROUGH THE NETWORK.
         // THIS MEANS: OBJECTS THAT SHOULD RECEIVE REAL-TIME UPDATES
