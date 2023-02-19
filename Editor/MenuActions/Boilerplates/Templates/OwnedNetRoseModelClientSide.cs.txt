@@ -17,16 +17,38 @@ namespace Client.Authoring.Behaviours.NetworkObjects
         // THAT ARE MEANT TO BE SYNCHRONIZED THROUGH THE NETWORK.
         // THIS MEANS: OBJECTS THAT SHOULD RECEIVE REAL-TIME UPDATES
         // FROM THE CONNECTED SERVER.
+                
+        protected override void Awake()
+        {
+            base.Awake();
+            OnSpawned += NetRoseModelClientSide_OnSpawned;
+            OnDespawned += NetRoseModelClientSide_OnDespawned;
+        }
         
-        // As an example, you might want this principal object to be
-        // tracked by a camera of your choice.
-        // private static Camera camera = Camera.main;
+        protected override void OnDestroy()
+        {
+            OnSpawned -= NetRoseModelClientSide_OnSpawned;
+            OnDespawned -= NetRoseModelClientSide_OnDespawned;
+            base.OnDestroy();
+        }
+
+        private void NetRoseModelClientSide_OnSpawned()
+        {
+            // Do something on local spawn.
+        }
+
+        private void NetRoseModelClientSide_OnDespawned()
+        {
+            // Do something on local despawn.
+            if (Instance == this) Instance = null;
+        }
 
         protected override void InflateOwnedFrom(#SPAWNDATA_TYPE# fullData)
         {
             // Implement this method to visually update this object
             // based on the full spawn data received through the
             // network update.
+            if (isOwned) Instance = this;
         }
         
         protected override void UpdateFrom(#REFRESHDATA_TYPE# refreshData)
@@ -38,13 +60,15 @@ namespace Client.Authoring.Behaviours.NetworkObjects
             // so some aspects are only meant to be refreshed.
         }
         
-        // Following the example, you might like the camera to follow
-        // this object.
+        // Somewhere else, IN ANOTHER OBJECT (e.g. a singleton for a game
+        // protocol) you might want to use this Update method:
         /**
         private void Update()
         {
-            if (isOwned && camera) camera.transform.position = new Vector3(
-                transform.position.x, transform.position.y, -10
+            if (#SCRIPTNAME#.Instance) Camera.main.transform.position = new Vector3(
+                #SCRIPTNAME#.Instance.transform.position.x,
+                #SCRIPTNAME#.Instance.transform.position.y,
+                Camera.main.transform.position.z
             );
         }
         */
