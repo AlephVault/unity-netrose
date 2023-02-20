@@ -116,6 +116,15 @@ namespace Client.Authoring.Behaviours.Protocols
         private #AIM# GetAimCell(INetRoseModelClientSide obj, Camera camera, Vector3 mousePosition)
         {
             // Use this function to generate a record of #AIM# class.
+            
+            // Alternatively, use this implementation:
+            // 1. Reach the map's ParentScope.
+            // 2. Iterate over the maps (idx=0 to Count-1).
+            // 3. Try converting WorldToCell for each iterated map.
+            // 4. If the X coordinate is valid in 0..map.Width-1 and
+            //    the Y coordinate is valid in 0..map.Height-1 or perhaps
+            //    in 0..map.Height (this one would be allowed in games
+            //    like Argentum Online) then return that one instead.
 
             if (obj == null) return null;
             Map map = obj.MapObject.ParentMap;
