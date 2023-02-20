@@ -2,6 +2,9 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using AlephVault.Unity.Meetgard.Authoring.Behaviours.Client;
+using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
+using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
+using Client.Authoring.Behaviours.NetworkObjects;
 using Protocols;
 using Protocols.Messages;
 
@@ -108,6 +111,19 @@ namespace Client.Authoring.Behaviours.Protocols
             //     //
             //     // Otherwise, this is the same as the untyped case.
             // });
+        }
+        
+        private #AIM# GetAimCell(INetRoseModelClientSide obj, Camera camera, Vector3 mousePosition)
+        {
+            // Use this function to generate a record of #AIM# class.
+
+            if (obj == null) return null;
+            Map map = obj.MapObject.ParentMap;
+            if (map == null) return null;
+            int index = map.ParentScope == null ? 0 : map.GetIndex();
+            Vector3 worldPosition = camera.ScreenToWorldPoint(mousePosition);
+            Vector3 cell = map.ObjectsLayer.GetComponent<Grid>().WorldToCell(worldPosition);
+            return new #AIM# { Map = index, X = (ushort)cell.x, Y = (ushort)cell.x };
         }
         
         /// <summary>
