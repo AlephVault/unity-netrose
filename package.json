@@ -7,7 +7,7 @@
   "dependencies": {
     "com.gamemeanmachine.unity.windrose": "0.0.7",
     "com.alephvault.unity.meetgard.scopes": "0.0.3",
-    "com.alephvault.unity.meetgard": "0.0.4"
+    "com.alephvault.unity.meetgard": "0.0.5"
   },
   "author": {
     "name": "Game Mean Machine",
