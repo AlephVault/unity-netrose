@@ -4,6 +4,7 @@ using GameMeanMachine.Unity.NetRose.Types.Models;
 using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
 using GameMeanMachine.Unity.WindRose.Types;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -36,7 +37,7 @@ namespace GameMeanMachine.Unity.NetRose
                         ///   Executes the command on a given <see cref="MapObject"/>.
                         /// </summary>
                         /// <param name="obj">The object to execute the command into</param>
-                        public abstract void Execute(MapObject obj);
+                        public abstract void Execute(NetRoseModelClientSide<SpawnData, RefreshData> obj);
                     }
 
                     /// <summary>
@@ -66,10 +67,10 @@ namespace GameMeanMachine.Unity.NetRose
                         }
 
                         /// <inheritdoc />
-                        public void Execute(MapObject obj)
+                        public void Execute(NetRoseModelClientSide<SpawnData, RefreshData> obj)
                         {
-                            if (obj.X != StartX || obj.Y != StartY) obj.Teleport(StartX, StartY, true);
-                            obj.StartMovement(Direction);
+                            if (obj.MapObject.X != StartX || obj.MapObject.Y != StartY) obj.MapObject.Teleport(StartX, StartY, true);
+                            obj.MapObject.StartMovement(Direction);
                         }
                     }
 
@@ -95,10 +96,10 @@ namespace GameMeanMachine.Unity.NetRose
                         }
 
                         /// <inheritdoc />
-                        public void Execute(MapObject obj)
+                        public void Execute(NetRoseModelClientSide<SpawnData, RefreshData> obj)
                         {
-                            obj.CancelMovement();
-                            if (obj.X != RevertX || obj.Y != RevertY) obj.Teleport(RevertX, RevertY, true);
+                            obj.MapObject.CancelMovement();
+                            if (obj.MapObject.X != RevertX || obj.MapObject.Y != RevertY) obj.MapObject.Teleport(RevertX, RevertY, true);
                         }
                     }
 
@@ -124,10 +125,31 @@ namespace GameMeanMachine.Unity.NetRose
                         }
 
                         /// <inheritdoc />
-                        public void Execute(MapObject obj)
+                        public void Execute(NetRoseModelClientSide<SpawnData, RefreshData> obj)
                         {
-                            obj.FinishMovement();
-                            if (obj.X != EndX || obj.Y != EndY) obj.Teleport(EndX, EndY, true);
+                            QueuedCommand firstStartCommand = (
+                                from element in obj.queue
+                                where element is MovementStartCommand
+                                select element
+                            ).FirstOrDefault();
+                            bool isMoving = obj.MapObject.IsMoving;
+
+                            // First, queue or start the NEXT movement.
+                            if (firstStartCommand != null)
+                            {
+                                // There is a start command in the queue. Just start the
+                                // command (queuing it).
+                                obj.MapObject.StartMovement(
+                                    ((MovementStartCommand) firstStartCommand).Direction,
+                                    true, true
+                                );
+                            }
+                            
+                            if (obj.MapObject.X != EndX || obj.MapObject.Y != EndY)
+                            {
+                                if (isMoving) obj.MapObject.FinishMovement();
+                                obj.MapObject.Teleport(EndX, EndY, true);
+                            }
                         }
                     }
 
@@ -148,9 +170,9 @@ namespace GameMeanMachine.Unity.NetRose
                         }
 
                         /// <inheritdoc />
-                        public void Execute(MapObject obj)
+                        public void Execute(NetRoseModelClientSide<SpawnData, RefreshData> obj)
                         {
-                            obj.Speed = Speed;
+                            obj.MapObject.Speed = Speed;
                         }
                     }
 
@@ -171,9 +193,9 @@ namespace GameMeanMachine.Unity.NetRose
                         }
 
                         /// <inheritdoc />
-                        public void Execute(MapObject obj)
+                        public void Execute(NetRoseModelClientSide<SpawnData, RefreshData> obj)
                         {
-                            obj.Orientation = Orientation;
+                            obj.MapObject.Orientation = Orientation;
                         }
                     }
 
@@ -204,7 +226,7 @@ namespace GameMeanMachine.Unity.NetRose
                             bool freeToMove = !MapObject.IsMoving;
                             while (queue.Count > 0 && queue[0].CanExecute(freeToMove || accelerated))
                             {
-                                queue[0].Execute(MapObject);
+                                queue[0].Execute(this);
                                 if (queue[0] is MovementStartCommand)
                                 {
                                     freeToMove = false;
