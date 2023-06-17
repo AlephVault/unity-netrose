@@ -60,8 +60,6 @@ namespace Client.Authoring.Behaviours.NetworkObjects
             // so some aspects are only meant to be refreshed.
         }
         
-        // Somewhere else, IN ANOTHER OBJECT (e.g. a singleton for a game
-        // protocol) you might want to use this Update method:
         /**
         private void Update()
         {

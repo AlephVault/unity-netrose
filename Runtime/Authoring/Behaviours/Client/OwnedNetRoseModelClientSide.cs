@@ -40,7 +40,6 @@ namespace GameMeanMachine.Unity.NetRose
                     /// <param name="fullData">The full data, without ownership</param>
                     protected abstract void InflateOwnedFrom(SpawnData fullData);
                     
-
                     /// <summary>
                     ///   Returns whether the object is owned by the current connection.
                     /// </summary>
