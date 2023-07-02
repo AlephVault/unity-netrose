@@ -1,7 +1,7 @@
 using AlephVault.Unity.Meetgard.Protocols;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

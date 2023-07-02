@@ -1,6 +1,6 @@
 using AlephVault.Unity.Binary;
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

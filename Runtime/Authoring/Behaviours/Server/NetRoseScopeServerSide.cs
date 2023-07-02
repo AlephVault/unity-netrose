@@ -1,12 +1,12 @@
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
-using GameMeanMachine.Unity.WindRose.Types;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.World;
+using AlephVault.Unity.WindRose.Types;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Authoring
     {

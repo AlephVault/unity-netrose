@@ -1,17 +1,17 @@
 {
-  "name": "com.gamemeanmachine.unity.netrose",
+  "name": "com.alephvault.unity.netrose",
   "version": "0.0.5",
-  "displayName": "Game Mean Machine - Unity - NetRose",
+  "displayName": "Aleph Vault - Unity - NetRose",
   "description": "Allows the developer to create an orthogonal MMORPG game using a maps layout, based on WindRose and AlephVault's Meetgard.",
   "unity": "2020.3",
   "dependencies": {
-    "com.gamemeanmachine.unity.windrose": "0.0.7",
+    "com.alephvault.unity.windrose": "0.0.7",
     "com.alephvault.unity.meetgard.scopes": "0.0.3",
     "com.alephvault.unity.meetgard": "0.0.5"
   },
   "author": {
-    "name": "Game Mean Machine",
-    "email": "info@gamemeanmachine.com",
-    "url": "http://www.gamemeanmachine.com"
+    "name": "Aleph Vault",
+    "email": "info@alephvault.com",
+    "url": "http://www.alephvault.com"
   }
 }

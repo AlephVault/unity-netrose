@@ -1,7 +1,7 @@
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects.Teleport;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Server;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.Entities.Objects.Teleport;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

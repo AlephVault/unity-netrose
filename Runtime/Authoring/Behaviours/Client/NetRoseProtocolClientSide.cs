@@ -3,18 +3,18 @@ using AlephVault.Unity.Meetgard.Authoring.Behaviours.Client;
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Client;
 using AlephVault.Unity.Meetgard.Types;
 using AlephVault.Unity.Support.Utils;
-using GameMeanMachine.Unity.NetRose.Types.Models;
-using GameMeanMachine.Unity.NetRose.Types.Protocols;
-using GameMeanMachine.Unity.NetRose.Types.Protocols.Messages;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
-using GameMeanMachine.Unity.WindRose.Types;
+using AlephVault.Unity.NetRose.Types.Models;
+using AlephVault.Unity.NetRose.Types.Protocols;
+using AlephVault.Unity.NetRose.Types.Protocols.Messages;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.World;
+using AlephVault.Unity.WindRose.Types;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Authoring
     {

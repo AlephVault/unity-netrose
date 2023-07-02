@@ -1,4 +1,4 @@
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Types
     {
@@ -7,8 +7,8 @@ namespace GameMeanMachine.Unity.NetRose
             namespace Messages
             {
                 using AlephVault.Unity.Binary;
-                using GameMeanMachine.Unity.NetRose.Types.Models;
-                using GameMeanMachine.Unity.WindRose.Types;
+                using AlephVault.Unity.NetRose.Types.Models;
+                using AlephVault.Unity.WindRose.Types;
 
                 /// <summary>
                 ///   <para>

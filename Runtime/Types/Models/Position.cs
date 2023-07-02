@@ -2,7 +2,7 @@
 using AlephVault.Unity.Support.Generic.Types;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Types
     {

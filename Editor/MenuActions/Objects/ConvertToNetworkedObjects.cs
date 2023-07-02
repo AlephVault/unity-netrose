@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AlephVault.Unity.MenuActions.Utils;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace MenuActions
     {

@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using GameMeanMachine.Unity.NetRose.Samples.Common.Protocols;
+using AlephVault.Unity.NetRose.Samples.Common.Protocols;
 using AlephVault.Unity.Meetgard.Authoring.Behaviours.Client;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Client;
 using AlephVault.Unity.Support.Authoring.Behaviours;
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

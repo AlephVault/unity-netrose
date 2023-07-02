@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Server;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.World;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

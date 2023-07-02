@@ -1,14 +1,14 @@
 ﻿using AlephVault.Unity.Binary;
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Client;
 using AlephVault.Unity.Support.Utils;
-using GameMeanMachine.Unity.NetRose.Types.Models;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
-using GameMeanMachine.Unity.WindRose.Types;
+using AlephVault.Unity.NetRose.Types.Models;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.World;
+using AlephVault.Unity.WindRose.Types;
 using UnityEngine;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Authoring
     {

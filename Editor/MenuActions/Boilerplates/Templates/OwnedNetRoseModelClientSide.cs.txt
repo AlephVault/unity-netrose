@@ -1,8 +1,8 @@
 // Using UnityEngine;
 using AlephVault.Unity.Meetgard.Types;
 using AlephVault.Unity.Binary.Wrappers;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
-using GameMeanMachine.Unity.NetRose.Types.Models;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Client;
+using AlephVault.Unity.NetRose.Types.Models;
 
 namespace Client.Authoring.Behaviours.NetworkObjects
 {

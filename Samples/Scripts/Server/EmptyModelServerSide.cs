@@ -1,12 +1,12 @@
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Server;
 using AlephVault.Unity.Meetgard.Types;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Server;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

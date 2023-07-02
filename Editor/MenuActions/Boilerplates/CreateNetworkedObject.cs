@@ -5,7 +5,7 @@ using AlephVault.Unity.MenuActions.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace MenuActions
     {
@@ -121,7 +121,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 private static void DumpProtocolTemplates(
                     string basename, string spawnDataType, string refreshDataType, bool useOwned
                 ) {
-                    string directory = "Packages/com.gamemeanmachine.unity.netrose/" +
+                    string directory = "Packages/com.alephvault.unity.netrose/" +
                                        "Editor/MenuActions/Boilerplates/Templates";
 
                     // The network object templates.

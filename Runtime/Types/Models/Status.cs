@@ -1,9 +1,9 @@
 ﻿using AlephVault.Unity.Binary;
 using AlephVault.Unity.Support.Generic.Types;
-using GameMeanMachine.Unity.WindRose.Types;
+using AlephVault.Unity.WindRose.Types;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Types
     {

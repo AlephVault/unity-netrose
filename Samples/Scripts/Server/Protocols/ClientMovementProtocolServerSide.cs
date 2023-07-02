@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 using AlephVault.Unity.Meetgard.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
-using GameMeanMachine.Unity.WindRose.Types;
-using GameMeanMachine.Unity.NetRose.Samples.Common.Protocols;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
+using AlephVault.Unity.WindRose.Types;
+using AlephVault.Unity.NetRose.Samples.Common.Protocols;
 using Exception = System.Exception;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

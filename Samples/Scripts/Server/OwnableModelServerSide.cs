@@ -1,10 +1,10 @@
 using AlephVault.Unity.Meetgard.Types;
 using AlephVault.Unity.Binary.Wrappers;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.NetRose.Types.Models;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Server;
+using AlephVault.Unity.NetRose.Types.Models;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

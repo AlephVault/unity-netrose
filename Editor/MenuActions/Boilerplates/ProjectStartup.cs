@@ -4,7 +4,7 @@ using AlephVault.Unity.Boilerplates.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace MenuActions
     {

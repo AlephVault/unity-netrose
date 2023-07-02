@@ -1,16 +1,13 @@
 {
-    "name": "GameMeanMachine.Unity.NetRose.Samples",
+    "name": "AlephVault.Unity.NetRose.Runtime",
     "rootNamespace": "",
     "references": [
         "GUID:9fb1e86edc1bf4f46bfc867526bca155",
-        "GUID:24bccb8f3a7ace54a920a1876f50dce8",
+        "GUID:8233aa084c7334eb18c3e9713fa443e5",
         "GUID:c7004f7d2caeb7f488e163a6b45f66cb",
-        "GUID:0c7703a0282a77d4ea0e67ece4526024",
         "GUID:aa7fb4e1c71ef8c45b640fda65eb777b",
         "GUID:438580e4011b44553b1c6a67264565b5",
-        "GUID:439919d2a7071004695af55cbbe6745b",
-        "GUID:e5298cb7296f5bae0ac0732fc423a136",
-        "GUID:2a236d4d67d35cfb5bc3dc430a3689ed"
+        "GUID:d61261d1a98c4fafa1e0b59ab5c62fcc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

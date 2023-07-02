@@ -1,9 +1,9 @@
 using AlephVault.Unity.Meetgard.Authoring.Behaviours.Client;
-using GameMeanMachine.Unity.NetRose.Samples.Client.Protocols;
+using AlephVault.Unity.NetRose.Samples.Client.Protocols;
 using UnityEngine;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

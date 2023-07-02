@@ -1,13 +1,13 @@
 using AlephVault.Unity.Binary.Wrappers;
 using AlephVault.Unity.Meetgard.Protocols;
 using AlephVault.Unity.Meetgard.Types;
-using GameMeanMachine.Unity.NetRose.Types.Models;
-using GameMeanMachine.Unity.NetRose.Types.Protocols.Messages;
-using GameMeanMachine.Unity.WindRose.Types;
+using AlephVault.Unity.NetRose.Types.Models;
+using AlephVault.Unity.NetRose.Types.Protocols.Messages;
+using AlephVault.Unity.WindRose.Types;
 using System;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Types
     {

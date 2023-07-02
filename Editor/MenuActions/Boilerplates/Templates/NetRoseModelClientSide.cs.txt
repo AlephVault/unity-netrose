@@ -1,6 +1,6 @@
 using AlephVault.Unity.Meetgard.Types;
 using AlephVault.Unity.Binary.Wrappers;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Client;
 
 namespace Client.Authoring.Behaviours.NetworkObjects
 {

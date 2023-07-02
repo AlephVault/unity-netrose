@@ -8,11 +8,7 @@ To install this package you need to open the package manager in your project and
      - "name": "AlephVault"
      - "url": "https://unity.packages.alephvault.com"
      - "scopes": ["com.alephvault"]
-  2. And another registry with:
-     - "name": "GameMeanMachine"
-     - "url": "https://unity.packages.gamemeanmachine.com"
-     - "scopes": ["com.gamemeanmachine"]
-  3. Look for this package: `com.gamemeanmachine.unity.netrose`.
+  3. Look for this package: `com.alephvault.unity.netrose`.
   4. Install it.
 
 # Usage

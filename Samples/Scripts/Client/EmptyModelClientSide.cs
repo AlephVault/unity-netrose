@@ -1,9 +1,9 @@
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Client;
 using AlephVault.Unity.Meetgard.Types;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Client;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Samples
     {

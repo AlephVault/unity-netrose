@@ -1,9 +1,9 @@
 using AlephVault.Unity.Meetgard.Scopes.Authoring.Behaviours.Client;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.World;
 using UnityEngine;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Authoring
     {

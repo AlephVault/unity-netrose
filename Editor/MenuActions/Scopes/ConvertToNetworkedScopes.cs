@@ -1,11 +1,11 @@
 using System.Linq;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Client;
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
-using GameMeanMachine.Unity.WindRose.Authoring.Behaviours.World;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Client;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Server;
+using AlephVault.Unity.WindRose.Authoring.Behaviours.World;
 using UnityEditor;
 using UnityEngine;
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace MenuActions
     {

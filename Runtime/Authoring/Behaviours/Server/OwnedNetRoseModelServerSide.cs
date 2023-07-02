@@ -1,10 +1,10 @@
 ﻿using AlephVault.Unity.Binary;
-using GameMeanMachine.Unity.NetRose.Types.Models;
+using AlephVault.Unity.NetRose.Types.Models;
 using System.Threading.Tasks;
-using GameMeanMachine.Unity.WindRose.Types;
+using AlephVault.Unity.WindRose.Types;
 
 
-namespace GameMeanMachine.Unity.NetRose
+namespace AlephVault.Unity.NetRose
 {
     namespace Authoring
     {

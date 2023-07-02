@@ -1,13 +1,13 @@
 {
-    "name": "GameMeanMachine.Unity.NetRose.Editor",
+    "name": "AlephVault.Unity.NetRose.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:f90bbbab12f82970aadf435cc687514a",
         "GUID:0c7703a0282a77d4ea0e67ece4526024",
-        "GUID:d2803140f73c81547b3a8d3b9bf59ac5",
-        "GUID:439919d2a7071004695af55cbbe6745b",
         "GUID:b936c45d4ab60b6779c3d14d6a9e4086",
-        "GUID:e5298cb7296f5bae0ac0732fc423a136"
+        "GUID:d61261d1a98c4fafa1e0b59ab5c62fcc",
+        "GUID:063ca054c3024061a351e0ecc3887c15",
+        "GUID:841d61efedc84e6688800b74c031060a"
     ],
     "includePlatforms": [
         "Editor"

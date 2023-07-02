@@ -1,4 +1,4 @@
-using GameMeanMachine.Unity.NetRose.Authoring.Behaviours.Server;
+using AlephVault.Unity.NetRose.Authoring.Behaviours.Server;
 using Server.Authoring.Behaviours.NetworkObjects;
 
 namespace Server.Authoring.Behaviours.Protocols
