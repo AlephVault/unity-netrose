@@ -1,5 +1,5 @@
 # unity-netrose
-This is the NetRose project, which allows the developer to create an orthogonal MMORPG game using a maps layout, based on WindRose and AlephVault's Meetgard.
+This is the NetRose project, which allows the developer to create an orthogonal MMORPG game using a maps layout, based on WindRose and Meetgard.
 
 # Install
 To install this package you need to open the package manager in your project and:
