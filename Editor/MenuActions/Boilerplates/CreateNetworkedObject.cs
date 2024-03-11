@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using AlephVault.Unity.Boilerplates.Utils;
+using AlephVault.Unity.MenuActions.Types;
 using AlephVault.Unity.MenuActions.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace AlephVault.Unity.NetRose
                 ///   Utility window used to create the files for a new
                 ///   networked object (a pair of behaviours).
                 /// </summary>
-                public class CreateNetworkedObjectWindow : EditorWindow
+                public class CreateNetworkedObjectWindow : SmartEditorWindow
                 {
                     private Regex nameCriterion = new Regex("^[A-Z][A-Za-z0-9_]*$");
                     private Regex existingNameCriterion = new Regex("^([A-Za-z][A-Za-z0-9_]*\\.)*[A-Za-z][A-Za-z0-9_]*$");
@@ -41,13 +42,16 @@ namespace AlephVault.Unity.NetRose
                     // implies that, when this flag is false, the generated
                     // classes have NetRoseModel*Side instead).
                     private bool useOwnedBaseTypes;
-                    
-                    private void OnGUI()
+
+                    protected override float GetSmartWidth()
+                    {
+                        return 750;
+                    }
+
+                    protected override void OnAdjustedGUI()
                     {
                         GUIStyle longLabelStyle = MenuActionUtils.GetSingleLabelStyle();
 
-                        EditorGUILayout.BeginVertical();
-                        
                         EditorGUILayout.LabelField(@"
 This utility generates the two networked object files, with boilerplate code and instructions on how to understand that code.
 
@@ -100,12 +104,9 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                         useOwnedBaseTypes = EditorGUILayout.ToggleLeft("Use Owned ('Principal') model base classes",
                             useOwnedBaseTypes);
                         EditorGUILayout.EndHorizontal();
-                        
-                        bool execute = validBaseName && validSpawnDataType && validRefreshDataType &&
-                                       GUILayout.Button("Generate");
-                        EditorGUILayout.EndVertical();
-                        
-                        if (execute) Execute();
+
+                        if (validBaseName && validSpawnDataType && validRefreshDataType)
+                            SmartButton("Generate", Execute);
                     }
 
                     private void Execute()
@@ -113,7 +114,6 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                         DumpProtocolTemplates(
                             baseName, spawnDataType, refreshDataType, useOwnedBaseTypes
                         );
-                        Close();
                     }
                 }
 
@@ -173,10 +173,6 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 public static void ExecuteBoilerplate()
                 {
                     CreateNetworkedObjectWindow window = ScriptableObject.CreateInstance<CreateNetworkedObjectWindow>();
-                    Vector2 size = new Vector2(750, 332);
-                    window.position = new Rect(new Vector2(110, 250), size);
-                    window.minSize = size;
-                    window.maxSize = size;
                     window.titleContent = new GUIContent("Networked Object Behaviours generation");
                     window.ShowUtility();
                 }

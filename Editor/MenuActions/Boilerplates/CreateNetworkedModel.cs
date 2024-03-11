@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using AlephVault.Unity.Boilerplates.Utils;
+using AlephVault.Unity.MenuActions.Types;
 using AlephVault.Unity.MenuActions.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -22,19 +23,22 @@ namespace AlephVault.Unity.NetRose
                 ///   Utility window used to create the files for a new
                 ///   networked object (a pair of behaviours).
                 /// </summary>
-                public class CreateNetworkedModelWindow : EditorWindow
+                public class CreateNetworkedModelWindow : SmartEditorWindow
                 {
                     private Regex nameCriterion = new Regex("^[A-Z][A-Za-z0-9_]*$");
                     
                     // The base name to use.
                     private string baseName = "MyType";
-                    
-                    private void OnGUI()
+
+                    protected override float GetSmartWidth()
+                    {
+                        return 750;
+                    }
+
+                    protected override void OnAdjustedGUI()
                     {
                         GUIStyle longLabelStyle = MenuActionUtils.GetSingleLabelStyle();
 
-                        EditorGUILayout.BeginVertical();
-                        
                         EditorGUILayout.LabelField(@"
 This utility generates the serializable type file, with boilerplate code and instructions on how to understand that code.
 
@@ -57,17 +61,13 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                             EditorGUILayout.LabelField("The base name is invalid!");
                         }
                         EditorGUILayout.EndHorizontal();
-                        
-                        bool execute = validBaseName && GUILayout.Button("Generate");
-                        EditorGUILayout.EndVertical();
-                        
-                        if (execute) Execute();
+
+                        if (validBaseName) SmartButton("Generate", Execute);
                     }
 
                     private void Execute()
                     {
                         DumpTypeTemplates(baseName);
-                        Close();
                     }
                 }
 
@@ -101,10 +101,6 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 public static void ExecuteBoilerplate()
                 {
                     CreateNetworkedModelWindow window = ScriptableObject.CreateInstance<CreateNetworkedModelWindow>();
-                    Vector2 size = new Vector2(750, 200);
-                    window.position = new Rect(new Vector2(110, 250), size);
-                    window.minSize = size;
-                    window.maxSize = size;
                     window.titleContent = new GUIContent("Serializable type generation");
                     window.ShowUtility();
                 }
@@ -112,4 +108,3 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
         }
     }
 }
-

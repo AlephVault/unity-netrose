@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using AlephVault.Unity.MenuActions.Types;
 using AlephVault.Unity.MenuActions.Utils;
 using AlephVault.Unity.WindRose.Authoring.Behaviours.Entities.Objects;
 using UnityEditor;
@@ -28,18 +29,21 @@ namespace AlephVault.Unity.NetRose
                 ///   Utility window used to create networked prefabs
                 ///   out of a selected base prefab.
                 /// </summary>
-                public class ConvertToNetworkedObjectsWindow : EditorWindow
+                public class ConvertToNetworkedObjectsWindow : SmartEditorWindow
                 {
                     private Regex existingNameCriterion = new Regex("^([A-Za-z][A-Za-z0-9_]*\\.)*[A-Z][A-Za-z0-9_]*$");
                     
                     // The base name to use.
                     private string baseName = "MyModel";
 
-                    private void OnGUI()
+                    protected override float GetSmartWidth()
+                    {
+                        return 750;
+                    }
+
+                    protected override void OnAdjustedGUI()
                     {
                         GUIStyle longLabelStyle = MenuActionUtils.GetSingleLabelStyle();
-
-                        EditorGUILayout.BeginVertical();
 
                         EditorGUILayout.LabelField($@"
 This utility generates the two networked prefabs, one for the client and one for the server, from a selected MapObject prefab (in the core objects directory).
@@ -68,13 +72,8 @@ WARNING: THIS MIGHT OVERRIDE EXISTING ASSETS. Always use proper source code mana
                         }
                         EditorGUILayout.EndHorizontal();
 
-                        EditorGUILayout.EndVertical();
-
-                        if (validBaseName && GUILayout.Button("Make Prefab(s)"))
-                        {
-                            GenerateNetworkedPrefabs(baseName);
-                            Close();
-                        }
+                        if (validBaseName)
+                            SmartButton("Make Prefab(s)", () => { GenerateNetworkedPrefabs(baseName); });
                     }
                 }
 
@@ -128,10 +127,6 @@ WARNING: THIS MIGHT OVERRIDE EXISTING ASSETS. Always use proper source code mana
                 public static void ExecuteWrapper()
                 {
                     ConvertToNetworkedObjectsWindow window = ScriptableObject.CreateInstance<ConvertToNetworkedObjectsWindow>();
-                    Vector2 size = new Vector2(750, 318);
-                    window.position = new Rect(new Vector2(110, 250), size);
-                    window.minSize = size;
-                    window.maxSize = size;
                     window.titleContent = new GUIContent("Networked Objects conversion");
                     window.ShowUtility();
                 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using AlephVault.Unity.Boilerplates.Utils;
+using AlephVault.Unity.MenuActions.Types;
 using AlephVault.Unity.MenuActions.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace AlephVault.Unity.NetRose
                 ///   Utility window used to create the files for the new
                 ///   game protocol.
                 /// </summary>
-                public class CreateMainGameProtocolWindow : EditorWindow
+                public class CreateMainGameProtocolWindow : SmartEditorWindow
                 {
                     private Regex nameCriterion = new Regex("^[A-Z][A-Za-z0-9_]*$");
                     private Regex existingNameCriterion = new Regex("^([A-Za-z][A-Za-z0-9_]*\\.)*[A-Za-z][A-Za-z0-9_]*$");
@@ -40,13 +41,16 @@ namespace AlephVault.Unity.NetRose
                     
                     // The base name of the network object type to refer.
                     private string aimType = "AimType";
-                    
-                    private void OnGUI()
+
+                    protected override float GetSmartWidth()
+                    {
+                        return 750;
+                    }
+
+                    protected override void OnAdjustedGUI()
                     {
                         GUIStyle longLabelStyle = MenuActionUtils.GetSingleLabelStyle();
 
-                        EditorGUILayout.BeginVertical();
-                        
                         EditorGUILayout.LabelField(@"
 This utility generates a game protocol (related to a principal objects one) and a type for the aim data.
 
@@ -99,16 +103,13 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                         }
                         EditorGUILayout.EndHorizontal();
                         
-                        bool execute = validBaseName && validPrincipalProtocol && GUILayout.Button("Generate");
-                        EditorGUILayout.EndVertical();
-                        
-                        if (execute) Execute();
+                        if (validBaseName && validPrincipalProtocol)
+                            SmartButton("Generate", Execute);
                     }
 
                     private void Execute()
                     {
                         DumpProtocolTemplates(baseName, aimType, principalProtocolBaseName);
-                        Close();
                     }
                 }
 
@@ -185,10 +186,6 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 public static void ExecuteBoilerplate()
                 {
                     CreateMainGameProtocolWindow window = ScriptableObject.CreateInstance<CreateMainGameProtocolWindow>();
-                    Vector2 size = new Vector2(750, 372);
-                    window.position = new Rect(new Vector2(110, 250), size);
-                    window.minSize = size;
-                    window.maxSize = size;
                     window.titleContent = new GUIContent("Main game protocol generation");
                     window.ShowUtility();
                 }
