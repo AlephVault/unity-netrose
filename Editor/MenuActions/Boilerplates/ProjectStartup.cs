@@ -24,7 +24,7 @@ namespace AlephVault.Unity.NetRose
             /// </summary>
             public static class ProjectStartup
             {
-                [MenuItem("Assets/Create/Net Rose/Boilerplates/Project Startup", false, 204)]
+                [MenuItem("Assets/Create/AlephVault/Net Rose/Boilerplates/Project Startup", false, 204)]
                 public static void ExecuteBoilerplate()
                 {
                     WindRose.MenuActions.Boilerplates.ProjectStartup.ExecuteBoilerplate();

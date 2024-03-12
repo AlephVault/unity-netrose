@@ -97,7 +97,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 /// <summary>
                 ///   Opens a dialog to execute the behaviours creation boilerplate.
                 /// </summary>
-                [MenuItem("Assets/Create/Net Rose/Boilerplates/Create Serializable Type", false, 203)]
+                [MenuItem("Assets/Create/AlephVault/Net Rose/Boilerplates/Create Serializable Type", false, 203)]
                 public static void ExecuteBoilerplate()
                 {
                     CreateNetworkedModelWindow window = ScriptableObject.CreateInstance<CreateNetworkedModelWindow>();

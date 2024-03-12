@@ -123,7 +123,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING ASSETS. Always use proper source code mana
                     }
                 }
                 
-                [MenuItem("Assets/Create/Net Rose/Objects/Networked Object Prefabs (From 1+ selected core object prefabs)", false, priority = 203)]
+                [MenuItem("Assets/Create/AlephVault/Net Rose/Objects/Networked Object Prefabs (From 1+ selected core object prefabs)", false, priority = 203)]
                 public static void ExecuteWrapper()
                 {
                     ConvertToNetworkedObjectsWindow window = ScriptableObject.CreateInstance<ConvertToNetworkedObjectsWindow>();
@@ -131,7 +131,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING ASSETS. Always use proper source code mana
                     window.ShowUtility();
                 }
 
-                [MenuItem("Assets/Create/Net Rose/Objects/Networked Object Prefabs (From 1+ selected core object prefabs)", true)]
+                [MenuItem("Assets/Create/AlephVault/Net Rose/Objects/Networked Object Prefabs (From 1+ selected core object prefabs)", true)]
                 public static bool CanExecuteWrapper()
                 {
                     return (from obj in Selection.GetFiltered<MapObject>(SelectionMode.Assets)

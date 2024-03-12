@@ -182,7 +182,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 /// <summary>
                 ///   Opens a dialog to execute the protocol creation boilerplate.
                 /// </summary>
-                [MenuItem("Assets/Create/Net Rose/Boilerplates/Create Main Game Protocol", false, 205)]
+                [MenuItem("Assets/Create/AlephVault/Net Rose/Boilerplates/Create Main Game Protocol", false, 205)]
                 public static void ExecuteBoilerplate()
                 {
                     CreateMainGameProtocolWindow window = ScriptableObject.CreateInstance<CreateMainGameProtocolWindow>();

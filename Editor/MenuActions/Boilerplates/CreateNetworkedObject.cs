@@ -169,7 +169,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 /// <summary>
                 ///   Opens a dialog to execute the behaviours creation boilerplate.
                 /// </summary>
-                [MenuItem("Assets/Create/Net Rose/Boilerplates/Create Networked Object Behaviours", false, 204)]
+                [MenuItem("Assets/Create/AlephVault/Net Rose/Boilerplates/Create Networked Object Behaviours", false, 204)]
                 public static void ExecuteBoilerplate()
                 {
                     CreateNetworkedObjectWindow window = ScriptableObject.CreateInstance<CreateNetworkedObjectWindow>();
