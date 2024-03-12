@@ -17,7 +17,7 @@ namespace AlephVault.Unity.NetRose
                 private const string PREFIXDIR_CLIENT = "Assets/Objects/Prefabs/Client/Scopes/";
                 private const string PREFIXDIR_SERVER = "Assets/Objects/Prefabs/Server/Scopes/";
                 
-                [MenuItem("Assets/Create/AlephVault/Net Rose/Objects/Networked Object Scopes (From 1+ selected core object scopes)", false, priority = 203)]
+                [MenuItem("Assets/Create/Aleph Vault/NetRose/Objects/Networked Object Scopes (From 1+ selected core object scopes)", false, priority = 203)]
                 public static void ExecuteWrapper()
                 {
                     foreach (var obj in Selection.GetFiltered<Scope>(SelectionMode.Assets))
@@ -42,7 +42,7 @@ namespace AlephVault.Unity.NetRose
                     }
                 }
 
-                [MenuItem("Assets/Create/AlephVault/Net Rose/Objects/Networked Object Scopes (From 1+ selected core object scopes)", true)]
+                [MenuItem("Assets/Create/Aleph Vault/NetRose/Objects/Networked Object Scopes (From 1+ selected core object scopes)", true)]
                 public static bool CanExecuteWrapper()
                 {
                     return (from obj in Selection.GetFiltered<Scope>(SelectionMode.Assets)

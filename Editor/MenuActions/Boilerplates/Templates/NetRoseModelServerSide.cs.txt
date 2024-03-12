@@ -11,7 +11,7 @@ namespace Server.Authoring.Behaviours.NetworkObjects
         // THIS MEANS: OBJECTS THAT SHOULD SEND REAL-TIME UPDATES
         // TO THE CONNECTED CLIENTS.
         //
-        // This is a synchronized model for Wind Rose (Net Rose)
+        // This is a synchronized model for WindRose (NetRose)
         // Map Objects. There are two data types involved here:
         // - The data type used to spawn a new object.
         //   - #SPAWNDATA_TYPE#, in this case.
