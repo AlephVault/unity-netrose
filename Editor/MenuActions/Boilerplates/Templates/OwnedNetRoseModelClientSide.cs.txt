@@ -11,7 +11,7 @@ namespace Client.Authoring.Behaviours.NetworkObjects
         /// <summary>
         ///   Tracks the current instance.
         /// </summary>
-        public static #SCRIPTNAME# Instance = null { get; private set; }
+        public static #SCRIPTNAME# Instance { get; private set; } = null;
         
         // THIS BEHAVIOUR IS MEANT TO BE ATTACHED TO MAP OBJECTS
         // THAT ARE MEANT TO BE SYNCHRONIZED THROUGH THE NETWORK.
