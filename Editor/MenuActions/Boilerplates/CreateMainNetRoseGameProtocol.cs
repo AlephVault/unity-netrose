@@ -95,7 +95,7 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
 
                         // The principal protocol
                         EditorGUILayout.BeginHorizontal();
-                        principalProtocolBaseName = EditorGUILayout.TextField("Network object", principalProtocolBaseName).Trim();
+                        principalProtocolBaseName = EditorGUILayout.TextField("Principal protocol", principalProtocolBaseName).Trim();
                         bool validPrincipalProtocol = existingNameCriterion.IsMatch(principalProtocolBaseName);
                         if (!validPrincipalProtocol)
                         {
