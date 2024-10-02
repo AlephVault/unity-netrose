@@ -74,6 +74,8 @@ namespace AlephVault.Unity.NetRose
                     if (Input.GetKeyDown(mode2 ? mode2StartKey : mode1StartKey) && !client.IsRunning && !client.IsConnected)
                     {
                         Debug.Log("Sample Server::Starting...");
+                        // In your computer: map 127.0.0.1 -> test.alephvault.com.
+                        // This serves in particular for when using SSL=true.
                         client.Connect("test.alephvault.com", 9999);
                         Debug.Log("Sample Server::Started.");
                     }
