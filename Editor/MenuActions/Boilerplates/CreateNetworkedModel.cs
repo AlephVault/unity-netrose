@@ -40,7 +40,7 @@ namespace AlephVault.Unity.NetRose
                         GUIStyle longLabelStyle = MenuActionUtils.GetSingleLabelStyle();
 
                         EditorGUILayout.LabelField(@"
-This utility generates the serializable type file, with boilerplate code and instructions on how to understand that code.
+This utility generates the serializable type file, with boilerplate code and instructions on how to understand that code, into Assets/Scripts/Models.
 
 The base name has to be chosen (carefully and according to the game design):
 - It must start with an uppercase letter.
@@ -97,11 +97,11 @@ WARNING: THIS MIGHT OVERRIDE EXISTING CODE. Always use proper source code manage
                 /// <summary>
                 ///   Opens a dialog to execute the behaviours creation boilerplate.
                 /// </summary>
-                [MenuItem("Assets/Create/Aleph Vault/NetRose/Boilerplates/Create Serializable Type", false, 203)]
+                [MenuItem("Assets/Create/Aleph Vault/NetRose/Boilerplates/Create Networked Model Type", false, 203)]
                 public static void ExecuteBoilerplate()
                 {
                     CreateNetworkedModelWindow window = ScriptableObject.CreateInstance<CreateNetworkedModelWindow>();
-                    window.titleContent = new GUIContent("Serializable type generation");
+                    window.titleContent = new GUIContent("Networked Model type generation");
                     window.ShowUtility();
                 }
             }
